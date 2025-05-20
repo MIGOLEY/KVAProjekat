@@ -13,7 +13,7 @@ export const routes: Routes = [
     { path: 'korpa', component: KorpaComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'pretraga', component: PretragaComponent },
-    { path: 'film/:id', component: FilmComponent },
+    { path: 'film', component: FilmComponent },
     { path: 'login', component: LoginComponent },
     { path: '**', redirectTo: '' }
 ];

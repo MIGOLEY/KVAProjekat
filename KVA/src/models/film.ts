@@ -1,14 +1,16 @@
 export interface Film {
-    id: number;
-    ime: string;
-    opis: string;
-    zanr: string;
-    trajanje: number;
-    reziser: string;
-    glumci: string[];
-    datumIzlaska: Date;
-    datumProjekcije: Date;
-    cenaKarte: number;
-    statusProjekcije: string[];
-    //ocena: Recenzija[];
+    movieId: number;
+    title: string;
+    description: string;
+    genre: string;
+    runTime: number;
+    startDate: string;
+    director: string;
+    actors: string[];
+    projectionDate: string;
+    price: number;
+    image: string;
+    createdAt: string;
+    rating?: 1 | 2 | 3 | 4 | 5 | null; //povezati sa recenzija.ts
+    //recenzija?: Recenzija[];
 }

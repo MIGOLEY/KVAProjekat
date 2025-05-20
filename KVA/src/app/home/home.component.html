@@ -1,1 +1,36 @@
 <p>home works!</p>
+<div *ngIf="error" class="container">
+    <mat-card class="loading" appearance="outlined" color="red">
+        <mat-card-content>
+            <h1>Greška!</h1>
+            <p style="color: red;">{{error}}</p>
+        </mat-card-content>
+    </mat-card>
+</div>
+<p>test</p>
+<div *ngIf="movies" class="container">
+    <mat-card class="movies-card" appearance="outlined" *ngFor="let movie of movies">
+        <img mat-card-image [src]="utils.generateMovieImage(movie.image)" [alt]="movie.image">
+        <mat-card-content>
+            <h1>{{movie.title}}</h1>
+     <!--   <p>Naziv filma: {{movie.title}}</p> -->
+            <p>Žanr: {{movie.genre}}</p>
+            <p>Trajanje filma: {{movie.runTime}}</p>
+            <p>Režiser: {{movie.director}} &deg;C</p>
+            <p>Glumci: {{movie.actors}}</p>
+            <p>Datum izlaska: {{utils.formatDate(movie.startDate)}}</p>
+            <!-- ovo dole boldirano ili nesto nzm -->
+            <p>Datum projekcije: {{utils.formatDate(movie.projectionDate)}} </p>
+            <p>Cena karte: {{movie.price}}</p>
+            <p>Ocena gledalaca: {{movie.rating}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <a mat-button [routerLink]="['/details/', movie.movieId]">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Details
+            </a>
+            <a mat-button [routerLink]="['/details/'+movie.movieId+'/order']">
+                <i class="fa-solid fa-cart-shopping"></i> Book Now
+            </a>
+        </mat-card-actions>
+    </mat-card>
+</div>

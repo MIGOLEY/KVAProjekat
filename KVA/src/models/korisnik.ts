@@ -1,11 +1,10 @@
 export interface Korisnik {
-    id: number;
-    ime: string;
-    prezime: string;
+    name: string;
+    surname: string;
     email: string;
-    telefon: string;
-    adresa: string;
-    omiljeniFilmovi: string[];
-    korisnickoIme: string;
-    lozinka: string;
+    phoneNumber: string;
+    address: string;
+    favoriteMovies: number[];
+    username: string;
+    password: string;
 }

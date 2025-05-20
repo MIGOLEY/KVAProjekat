@@ -1,6 +1,6 @@
 export interface Recenzija {
-    korisnikId: number;
+    // userId: number;
     username: string;
-    ocena: number;
-    komentar: string;
+    rating: number;
+    comment: string;
 }
