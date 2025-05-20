@@ -7,7 +7,8 @@ export interface Film {
     reziser: string;
     glumci: string[];
     datumIzlaska: Date;
-    projekcija: Date;
+    datumProjekcije: Date;
     cenaKarte: number;
-    // recenzija: Recenzija[];
+    statusProjekcije: string[];
+    //ocena: Recenzija[];
 }
