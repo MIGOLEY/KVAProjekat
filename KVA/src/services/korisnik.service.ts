@@ -1,4 +1,5 @@
-//import { OrderModel } from "../models/order.model"
+import { Film } from "../models/film"
+import { Ticket } from "../models/ticket"
 import { Korisnik } from "../models/korisnik"
 
 export class UserService {
@@ -13,7 +14,9 @@ export class UserService {
                     surname: 'User',
                     phoneNumber: '+3816123456789',
                     address: 'Mokroluska 14, Vozdovac',
-                    favoriteMovies: [1],
+                    tickets: [],
+                    watchedMovies: [],
+                    favoriteMovies: [],
                     password: 'user123'
                 }
             ]
@@ -77,56 +80,56 @@ export class UserService {
         return null
     }
 
-    // static createOrder(order: OrderModel) {
-    //     const arr = this.retrieveUsers()
-    //     for (let user of arr) {
-    //         if (user.email == localStorage.getItem('active')) {
-    //             user.orders.push(order)
-    //             localStorage.setItem('users', JSON.stringify(arr))
-    //             return true
-    //         }
-    //     }
+    static buyTicket(ticket: Ticket) {
+        const arr = this.retrieveUsers()
+        for (let user of arr) {
+            if (user.email == localStorage.getItem('active')) {
+                user.tickets.push(ticket)
+                localStorage.setItem('users', JSON.stringify(arr))
+                return true
+            }
+        }
 
-    //     return false
-    // }
+        return false
+    }
 
-    // static changeOrderStatus(state: 'ordered' | 'paid' | 'canceled', id: number) {
-    //     const active = this.getActiveUser()
-    //     if (active) {
-    //         const arr = this.retrieveUsers()
-    //         for (let user of arr) {
-    //             if (user.email == active.email) {
-    //                 for (let order of user.orders) {
-    //                     if (order.id == id) {
-    //                         order.status = state
-    //                     }
-    //                 }
-    //                 localStorage.setItem('users', JSON.stringify(arr))
-    //                 return true
-    //             }
-    //         }
-    //     }
-    //     return false
-    // }
+    static changeTicketStatus(state: 'rezervisano' | 'gledano' | 'otkazano', id: number) {
+        const active = this.getActiveUser()
+        if (active) {
+            const arr = this.retrieveUsers()
+            for (let user of arr) {
+                if (user.email == active.email) {
+                    for (let ticket of user.tickets) {
+                        if (ticket.id == id) {
+                            ticket.status = state
+                        }
+                    }
+                    localStorage.setItem('users', JSON.stringify(arr))
+                    return true
+                }
+            }
+        }
+        return false
+    }
 
-    // static changeRating(r: boolean, id: number) {
-    //     const active = this.getActiveUser()
-    //     if (active) {
-    //         const arr = this.retrieveUsers()
-    //         for (let user of arr) {
-    //             if (user.email == active.email) {
-    //                 for (let order of user.orders) {
-    //                     if (order.id == id && order.status == 'paid') {
-    //                         order.rating = r
-    //                     }
-    //                 }
-    //                 localStorage.setItem('users', JSON.stringify(arr))
-    //                 return true
-    //             }
-    //         }
-    //     }
-    //     return false
-    // }
+    static changeRating(r: number, id: number) {
+        const active = this.getActiveUser()
+        if (active) {
+            const arr = this.retrieveUsers()
+            for (let user of arr) {
+                if (user.email == active.email) {
+                    for (let film of user.watchedMovies) {
+                        if (film.movieId == id) {
+                            film.rating = r;
+                        }
+                    }
+                    localStorage.setItem('users', JSON.stringify(arr))
+                    return true
+                }
+            }
+        }
+        return false
+    }
 
     static changePassword(newPassword: string): boolean {
 

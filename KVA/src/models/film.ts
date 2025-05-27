@@ -1,7 +1,10 @@
+import { ProdCompany } from "./prod-company"
+
 export interface Film {
     movieId: number;
     title: string;
     description: string;
+    prodCompany: ProdCompany;
     genre: string;
     runTime: number;
     startDate: string;
@@ -11,6 +14,5 @@ export interface Film {
     price: number;
     image: string;
     createdAt: string;
-    rating?: 1 | 2 | 3 | 4 | 5 | null; //povezati sa recenzija.ts
-    //recenzija?: Recenzija[];
+    rating: null | 1 | 2 | 3 | 4 | 5 | number;
 }

@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PretragaComponent } from './pretraga/pretraga.component';
 import { FilmComponent } from './film/film.component';
+import { ProdcompanyComponent } from './prodcompany/prodcompany.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
     { path: 'pretraga', component: PretragaComponent },
     { path: 'film', component: FilmComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'prodcompany', component: ProdcompanyComponent},
     { path: '**', redirectTo: '' }
 ];

@@ -20,7 +20,8 @@ export class FilmService {
             method: 'GET',
             params: {
                 'page': page,
-                'size': size
+                'size': size,
+                'sort': 'startDate, desc',
             }
         })
     }
@@ -36,6 +37,10 @@ export class FilmService {
                 'type': 'genre'
             }
         })
+    }
+
+    static async getTitle() {
+        return client.get('/movie/title')
     }
 }
 
