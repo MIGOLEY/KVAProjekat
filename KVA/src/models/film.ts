@@ -1,18 +1,39 @@
-import { ProdCompany } from "./prod-company"
+import { Director } from "./director"
+import { MovieActor } from "./movieActor"
+import { MovieGenre } from "./movieGenre"
 
 export interface Film {
-    movieId: number;
-    title: string;
+    active: boolean;
+    corporateId: string;
+    createdAt: Date;
     description: string;
-    prodCompany: ProdCompany;
-    genre: string;
+    director: Director;
+    directorId: number;
+    internalId: string;
+    movieActors: MovieActor[];
+    movieGenres: MovieGenre[];
+    movieId: number;
+    originalTitle: string;
+    poster: string;
     runTime: number;
+    shortDescription: string;
+    shortUrl: string;
     startDate: string;
-    director: string;
-    actors: string[];
-    projectionDate: string;
-    price: number;
-    image: string;
-    createdAt: string;
+    title: string;
+    updatedAt: null;
+
+    // movieId: number;
+    // title: string;
+    // description: string;
+    // prodCompany: ProdCompany;
+    // genre: string;
+    // runTime: number;
+    // startDate: string;
+    // director: string;
+    // actors: string[];
+    // projectionDate: string;
+    // price: number;
+    // image: string;
+    // createdAt: string;
     rating: null | 1 | 2 | 3 | 4 | 5 | number;
 }

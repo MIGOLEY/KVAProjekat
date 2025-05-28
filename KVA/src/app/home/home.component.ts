@@ -7,22 +7,25 @@ import { UtilsService } from '../../services/utils.service';
 import { FilmService } from '../../services/film.service';
 import { Film } from '../../models/film';
 import { AxiosError } from 'axios';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, NgFor, MatButtonModule, MatCardModule, RouterLink],
+  imports: [NgIf, NgFor, MatButtonModule, MatCardModule, RouterLink, JsonPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  public movies: Film[] | null = null
+  service = FilmService
+  public movies: Film[] | null = null//Film[] | null = null
   public error: string | null = null
 
   constructor(public utils: UtilsService) {
-    FilmService.getMovies(0,9)
-      .then(rsp => {
-        this.movies = rsp.data.content
-      })
+    // FilmService.getMovieById(1)
+    FilmService.getMovies()
+      .then(rsp => 
+        this.movies = rsp.data
+      )
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
   }
 }

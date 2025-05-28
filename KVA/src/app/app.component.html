@@ -5,14 +5,14 @@
         <i class="fa-solid fa-house"></i>
         <span class="link-name">Home</span>
     </a>
-    <a routerLink="/pretraga" mat-button>
-        <i class="fa-solid fa-search"></i>
-        <span class="link-name">Pretraga</span>
-    </a>
     <a routerLink="/film" mat-button>
         <i class="fa-solid fa-plane"></i>
         <span class="link-name">Film</span>
     </a>
+    <form method="GET">
+        <input id="search" type="text">
+        <input type="submit" routerLink="/pretraga" mat-button value="search">
+    </form>
     <a routerLink="/login" mat-button *ngIf="!service.getActiveUser()">
         <i class="fa-solid fa-right-to-bracket"></i>
         <span class="link-name">Login</span>
