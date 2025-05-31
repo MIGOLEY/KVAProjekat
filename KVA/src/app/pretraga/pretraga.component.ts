@@ -19,14 +19,10 @@ export class PretragaComponent {
   service = FilmService
   public movies: Film[] | null = null//Film[] | null = null
   public error: string | null = null
-  public search: HTMLInputElement | null = null
-  public searchContent: string | null = null
-
+  
   constructor(public utils: UtilsService) {
     // FilmService.getMovieById(1)
-    this.search = document.getElementById("search") as HTMLInputElement;
-    this.searchContent = this.search.value;
-    FilmService.getMoviesSearch(this.searchContent)
+    FilmService.getMoviesSearch("brat")
       .then(rsp => 
         this.movies = rsp.data
         // this.movies = rsp.data.content

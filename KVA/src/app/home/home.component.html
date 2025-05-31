@@ -8,7 +8,10 @@
     </mat-card>
 </div> -->
 <!-- <pre>{{movies | json}}</pre> -->
-
+ <div>
+        <input type="text" [(ngModel)]="userInput" placeholder="Enter something..."/>
+        <button (click)="saveToSessionStorage()">Search</button>
+</div>
 <div *ngIf="movies">
     <p *ngFor="let movie of movies">{{movie.movieId}} {{movie.originalTitle}}</p>
     <!-- <pre>{{movies | json}}</pre> -->
