@@ -5,14 +5,14 @@
         <i class="fa-solid fa-house"></i>
         <span class="link-name">Home</span>
     </a>
-    <a routerLink="/film" mat-button>
-        <i class="fa-solid fa-plane"></i>
-        <span class="link-name">Film</span>
-    </a>
 
     <a routerLink="/login" mat-button *ngIf="!service.getActiveUser()">
         <i class="fa-solid fa-right-to-bracket"></i>
         <span class="link-name">Login</span>
+    </a>
+    <a routerLink="/register" mat-button *ngIf="!service.getActiveUser()">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span class="link-name">Register</span>
     </a>
     <a routerLink="/korisnik" mat-button *ngIf="service.getActiveUser()">
         <i class="fa-solid fa-user"></i>

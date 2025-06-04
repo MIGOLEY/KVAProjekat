@@ -7,34 +7,33 @@
         </mat-card-content>
     </mat-card>
 </div> -->
-<!-- <pre>{{movies | json}}</pre> -->
- <div>
+<div>
         <input type="text" [(ngModel)]="userInput" placeholder="Enter something..."/>
         <button (click)="saveToSessionStorage()">Search</button>
 </div>
-<div *ngIf="movies">
+<!-- <div *ngIf="movies">
     <p *ngFor="let movie of movies">{{movie.movieId}} {{movie.originalTitle}}</p>
-    <!-- <pre>{{movies | json}}</pre> -->
-</div>
+    
+</div> -->
 
 
-<!-- <div *ngIf="movies" class="container">
+<div *ngIf="movies" class="container">
     <mat-card class="movies-card" appearance="outlined" *ngFor="let movie of movies">
-        <img mat-card-image [src]="utils.generateMovieImage(movie.poster)" [alt]="movie.poster">
+        <a [routerLink]="['/film/',movie.movieId]"><img mat-card-image [src]="utils.generateMovieImage(movie.poster)" [alt]="movie.poster"></a>
         <mat-card-content>
             <h1>{{movie.title}}</h1>
             <p>Naziv filma: {{movie.title}}</p>
-            <p>Žanr: {{movie.genre}}</p>
+            <!-- <p>Žanr: {{movie.genre}}</p> -->
             <p>Trajanje filma: {{movie.runTime}}</p>
-            <p>Režiser: {{movie.director}}</p>
-            <p>Glumci: {{movie.actors}}</p>
+            <!-- <p>Režiser: {{movie.director}}</p> -->
+            <!-- <p>Glumci: {{movie.actors}}</p> -->
             <p>Datum izlaska: {{utils.formatDate(movie.startDate)}}</p>
             <p>Datum projekcije: {{utils.formatDate(movie.startDate)}} </p>
-            <p>Cena karte: {{movie.price}}</p>
+            <!-- <p>Cena karte: {{movie.price}}</p> -->
             <p>Ocena gledalaca: {{movie.rating}}</p>
         </mat-card-content>
         <mat-card-actions>
-            <a mat-button [routerLink]="['/details/', movie.movieId]">
+            <a mat-button [routerLink]="['/film/', movie.movieId]">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Details
             </a>
             <a mat-button [routerLink]="['/details/'+movie.movieId+'/order']">
@@ -42,4 +41,4 @@
             </a>
         </mat-card-actions>
     </mat-card> 
-</div> -->
+</div>

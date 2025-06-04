@@ -4,11 +4,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { UserService } from '../services/korisnik.service'
-import { FormsModule } from '@angular/forms';
+import { FormsModule,  ReactiveFormsModule, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatToolbarModule, MatButtonModule, RouterLink, NgIf, FormsModule],
+  imports: [RouterOutlet, MatToolbarModule, MatButtonModule, RouterLink, NgIf, FormsModule, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

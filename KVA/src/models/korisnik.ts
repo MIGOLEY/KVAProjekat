@@ -9,7 +9,7 @@ export interface Korisnik {
     address: string;
     tickets: Ticket[];
     watchedMovies: Film[];
-    favoriteMovies: Film[];
+    favoriteMovies: string[];
     username: string;
     password: string;
 }

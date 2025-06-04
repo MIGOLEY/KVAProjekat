@@ -1,1 +1,23 @@
-<p>film works!</p>
+<mat-card class="movies-card" appearance="outlined" *ngIf="movies as movie">
+        <a [routerLink]="['/film/',movie.movieId]"><img mat-card-image [src]="utils.generateMovieImage(movie.poster)" [alt]="movie.poster"></a>
+        <mat-card-content>
+            <h1>{{movie.title}}</h1>
+            <p>Naziv filma: {{movie.title}}</p>
+            <!-- <p>Žanr: {{movie.genre}}</p> -->
+            <p>Trajanje filma: {{movie.runTime}}</p>
+            <!-- <p>Režiser: {{movie.director}}</p> -->
+            <!-- <p>Glumci: {{movie.actors}}</p> -->
+            <p>Datum izlaska: {{utils.formatDate(movie.startDate)}}</p>
+            <p>Datum projekcije: {{utils.formatDate(movie.startDate)}} </p>
+            <!-- <p>Cena karte: {{movie.price}}</p> -->
+            <p>Ocena gledalaca: {{movie.rating}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <a mat-button [routerLink]="['/film/', movie.movieId]">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Details
+            </a>
+            <a mat-button [routerLink]="['/details/'+movie.movieId+'/order']">
+                <i class="fa-solid fa-cart-shopping"></i> Book Now
+            </a>
+        </mat-card-actions>
+    </mat-card> 

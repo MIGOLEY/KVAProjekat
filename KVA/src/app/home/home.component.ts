@@ -24,7 +24,6 @@ export class HomeComponent {
   searchValue: string = '';
 
   constructor(public utils: UtilsService) {
-    // FilmService.getMovieById(1)
     FilmService.getMoviesSearch(this.searchValue)
       .then(rsp => 
         this.movies = rsp.data
