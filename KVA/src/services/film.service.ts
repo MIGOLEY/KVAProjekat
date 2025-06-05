@@ -37,20 +37,45 @@ export class FilmService {
             method: 'GET',
         })
     }
+    static async getMoviesFilter(actor: number | null, genre: number | null, director: number | null){
+        return client.request({
+            url: `/movie/?actor=${actor}&genre=${genre}&director=${director}`,
+            method: 'GET',
+        })
+    }
     static async getMovieById(movieId: number) {
         return client.get(`/movie/${movieId}`)
     }
+    static async getGenre() {
+        return client.request({
+            url: '/genre',
+            method: 'GET',
+            params: {
+                'type': 'genre'
+            }
+        })
+    }
+    static async getActor() {
+        return client.request({
+            url: '/actor',
+            method: 'GET',
+            params: {
+                'type': 'actor'
+            }
+        })
+    }
+    static async getDirector() {
+        return client.request({
+            url: '/director',
+            method: 'GET',
+            params: {
+                'type': 'director'
+            }
+        })
+    }
 }
 
-//     static async getGenre() {
-//         return client.request({
-//             url: '/movie/genre',
-//             method: 'GET',
-//             params: {
-//                 'type': 'genre'
-//             }
-//         })
-//     }
+    
 
 //     static async getTitle() {
 //         return client.get('/movie/title')

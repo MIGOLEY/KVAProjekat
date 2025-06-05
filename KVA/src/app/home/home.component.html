@@ -1,15 +1,57 @@
-<p>home works!</p>
-<!-- <div *ngIf="error" class="container">
-    <mat-card class="loading" appearance="outlined" color="red">
-        <mat-card-content>
-            <h1>Greška!</h1>
-            <p style="color: red;">{{error}}</p>
-        </mat-card-content>
-    </mat-card>
-</div> -->
 <div>
-        <input type="text" [(ngModel)]="userInput" placeholder="Enter something..."/>
-        <button (click)="saveToSessionStorage()">Search</button>
+    <input type="text" [(ngModel)]="userInputName" id="search_form_name" placeholder="Unesite detalje filma"/><br>
+    <button (click)="Search()">Pretražite</button>
+</div>
+<div>
+    <!-- <mat-form-field>
+        <input type="text" matInput [formControl]="genreControl" [matAutocomplete]="auto" placeholder="Select genre">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onGenreSelected($event.option.value)">
+                <mat-option *ngFor="let genre of filteredGenres" [value]="genre.name">
+                    {{ genre.name }}
+                </mat-option>
+            </mat-autocomplete>
+    </mat-form-field> -->
+        <select [(ngModel)]="userInputGenre">
+            <option value="" selected>
+                -
+            </option>
+            <option *ngFor="let genre of genres" [value]="genre.genreId">
+                {{genre.name}}
+            </option>
+        </select>
+        <select [(ngModel)]="userInputActor">
+            <option value="" selected>
+                -
+            </option>
+            <option *ngFor="let actor of actors" [value]="actor.actorId">
+                {{actor.name}}
+            </option>
+        </select>
+        <select [(ngModel)]="userInputDirector">
+            <option value="" selected>
+                -
+            </option>
+            <option *ngFor="let director of directors" [value]="director.directorId">
+                {{director.name}}
+            </option>
+        </select>
+    <br>
+    <!--
+    Ovi input-i ispod se trenutno koriste samo da se proveri da li uopšte uspešno pretražuje navedene kriterijume pretrage; 
+    kasnije ćemo promeniti da
+    -->
+    <label for="search_form_date_released">Unesite datum izlaska filma: </label> <input type="date" id="search_form_date_released"><br>
+    <label for="search_form_date_projection">Unesite datum projekcije filma: </label> <input type="date" id="search_form_date_projection"><br>
+    <label for="search_form_runtime">Unesite dužinu projekcije: </label> <input type="number" id="search_form_runtime"><br>
+    <!-- Slider
+    <form>
+        <label for="vol">Volume (between 0 and 50):</label>
+        <input type="range" id="vol" name="vol" min="0" max="50">
+    </form>
+    -->
+    <!-- <label for="search_form_price">Unesite cenu karte: </label> <input type="number" id="search_form_price"> -->
+    <!-- <label for="search_form_rating">Unesite željenu ocenu filma: </label> <input type="number" id="search_form_rating" min="1" max="5"> -->
+    <button (click)="Filter()">Potvrdite parametre</button>
 </div>
 <!-- <div *ngIf="movies">
     <p *ngFor="let movie of movies">{{movie.movieId}} {{movie.originalTitle}}</p>
@@ -34,10 +76,10 @@
         </mat-card-content>
         <mat-card-actions>
             <a mat-button [routerLink]="['/film/', movie.movieId]">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Details
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Više detalja
             </a>
-            <a mat-button [routerLink]="['/details/'+movie.movieId+'/order']">
-                <i class="fa-solid fa-cart-shopping"></i> Book Now
+            <a mat-button (click)="Orders(movie)">
+                <i class="fa-solid fa-cart-shopping"></i> Rezervišite kartu
             </a>
         </mat-card-actions>
     </mat-card> 

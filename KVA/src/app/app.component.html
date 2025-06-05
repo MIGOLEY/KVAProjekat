@@ -18,6 +18,10 @@
         <i class="fa-solid fa-user"></i>
         <span class="link-name">Korisnik</span>
     </a>
+    <a routerLink="/korpa" mat-button *ngIf="service.getActiveUser()">
+        <i class="fa-solid fa-user"></i>
+        <span class="link-name">Vaša korpa</span>
+    </a>
     <button mat-button *ngIf="service.getActiveUser()" (click)="doLogout()">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span class="link-name">Logout</span> 
