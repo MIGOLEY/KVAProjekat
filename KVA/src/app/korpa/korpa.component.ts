@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { FilmService } from '../../services/film.service';
 import { Input} from '@angular/core';
+import { UtilsService } from 'services/utils.service';
 
 @Component({
   selector: 'app-korpa',
@@ -33,11 +34,22 @@ import { Input} from '@angular/core';
   styleUrl: './korpa.component.css'
 })
 export class KorpaComponent {
-  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate'];
+  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price'];
   @Input() orders: any[] = [];
 
   ngOnInit() {
   const savedOrders = localStorage.getItem('orders');
   this.orders = savedOrders ? JSON.parse(savedOrders) : [];
+  }
+  constructor(public utils: UtilsService){
+    
+  }
+  clearLocalStorage(){
+      localStorage.removeItem('orders')
+      window.location.reload()
+  }
+  getTotalPrice(): number {
+  return Number(this.orders.reduce((total, order) => total + (order.price || 0), 0));
 }
+
 }

@@ -21,6 +21,7 @@ export interface Film {
     startDate: string;
     title: string;
     updatedAt: null;
+    price: number;
 
     // movieId: number;
     // title: string;

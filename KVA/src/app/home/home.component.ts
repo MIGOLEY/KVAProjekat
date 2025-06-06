@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { Genre } from 'models/genre';
 import { Actor } from 'models/actor';
 import { Director } from 'models/director';
+import express, { Request, Response } from 'express';
 
 
 @Component({
@@ -26,7 +27,8 @@ import { Director } from 'models/director';
 })
 export class HomeComponent {
   service = FilmService
-  public movies: Film[] | null = null
+  //   public movies: Film[] | null = null
+  public movies: Film[] = []
   public error: string | null = null
   public genres: Genre[] | null = null
   // public filteredGeners: Observable< Genre[] > | null = null
@@ -43,46 +45,66 @@ export class HomeComponent {
   orders: any[] = [];
 
   constructor(public utils: UtilsService) {
+    // const savedPrices = localStorage.getItem('moviePrices');
+    // if (savedPrices) {
+    //   this.priceMap = JSON.parse(savedPrices);
+    // }
+
+    // Ako ne bude radilo, vratiti ovo:
+
+    // FilmService.getMoviesSearch(this.searchValue)
+    //   .then(rsp => 
+    //     this.movies = rsp.data
+    //   )
+    //   .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
+
+
     FilmService.getMoviesSearch(this.searchValue)
-      .then(rsp => 
-        this.movies = rsp.data
-      )
+      .then(rsp => {
+        this.movies = rsp.data.map((movie: Film) => ({
+          ...movie,
+          price: utils.priceMap.get(movie.movieId)
+        }));
+      })
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
     FilmService.getGenre()
-      .then(rsp => 
+      .then(rsp =>
         this.genres = rsp.data
       )
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
     FilmService.getActor()
-      .then(rsp => 
+      .then(rsp =>
         this.actors = rsp.data
       )
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
     FilmService.getDirector()
-      .then(rsp => 
+      .then(rsp =>
         this.directors = rsp.data
       )
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
+      
+    // localStorage.setItem('moviePrices', JSON.stringify([...this.priceMap]));
   }
   // onGenreSelected(){
   //   const
   // }
   Search() {
     sessionStorage.setItem('inputName', this.userInputName);
-    
+
     let name = sessionStorage.getItem('inputName');
-   
+
     if (!name) {
       name = "";
     }
 
     FilmService.getMoviesSearch(name)
-    .then(rsp => 
-      this.movies = rsp.data
-    )
-    
-    .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
+      .then(rsp =>
+        this.movies = rsp.data
+      )
+
+      .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
   }
+
   Filter() {
     // sessionStorage.setItem('inputActor', this.userInputActor);
     // sessionStorage.setItem('inputGenre', this.userInputGenre);
@@ -108,46 +130,26 @@ export class HomeComponent {
     }
 
     FilmService.getMoviesFilter(this.actorId, this.genreId, this.directorId)
-    .then(rsp => 
-      this.movies = rsp.data
-    )
-    
-    .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
+      .then(rsp =>
+        this.movies = rsp.data
+      )
+
+      .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
 
     this.genreId = null
     this.directorId = null
     this.actorId = null
   }
-Orders(movie: any) {
-  // const ordered = this.orders.find(o => o.movie === movie.id);
-  const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-  const ordered = orders.find((o: any) => o.movieId === movie.id);
-  if (ordered) {
-    ordered.count += 1;
-  } else {
-    orders.push({
-      // active: boolean;
-      // corporateId: string;
-      // createdAt: Date;
-      // description: string;
-      // director: Director;
-      // directorId: number;
-      // internalId: string;
-      // movieActors: MovieActor[];
-      // movieGenres: MovieGenre[];
-      movieId: movie.movieId,
-      // originalTitle: string;
-      poster: movie.poster,
-      runTime: movie.runTime,
-      // shortDescription: string;
-      // shortUrl: string;
-      startDate: movie.startDate,
-      title: movie.title
-      // updatedAt: null;
 
-      // DODATI PRICE I RATING
-    });
-  }
-  localStorage.setItem('orders', JSON.stringify(orders));
-}
+  // updatePrice() {
+  //   for (let [movieId, price] of this.priceMap) {
+  //     this.movies = this.movies.map(movie => movie.movieId === movieId ? { ...movie, price } : movie);
+  //   }
+  //   localStorage.setItem('moviePrices', JSON.stringify(this.priceMap));
+  // }
+
+  // submitPrices() {
+  //   localStorage.setItem('moviePrices', JSON.stringify(this.priceMap));
+  //   alert('Cena je uspešno sačuvana!')
+  // }
 }

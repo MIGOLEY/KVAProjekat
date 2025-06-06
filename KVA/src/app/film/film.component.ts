@@ -22,10 +22,15 @@ export class FilmComponent {
   constructor(private route: ActivatedRoute, public utils: UtilsService) {
     route.params.subscribe(params => {
       FilmService.getMovieById(params['id'])
-        .then(rsp => 
-          this.movies = rsp.data
-        )
+        .then(rsp => {
+          const movie: Film = rsp.data;
+          this.movies = {
+            ...movie,
+            price: this.utils.priceMap.get(movie.movieId) || 0
+          };
+        })
         .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
      })
     }
 }
+
