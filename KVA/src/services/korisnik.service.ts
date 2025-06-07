@@ -80,56 +80,56 @@ export class UserService {
         return null
     }
 
-    static buyTicket(ticket: Ticket) {
-        const arr = this.retrieveUsers()
-        for (let user of arr) {
-            if (user.email == localStorage.getItem('active')) {
-                user.tickets.push(ticket)
-                localStorage.setItem('users', JSON.stringify(arr))
-                return true
-            }
-        }
+    // static buyTicket(ticket: Ticket) {
+    //     const arr = this.retrieveUsers()
+    //     for (let user of arr) {
+    //         if (user.email == localStorage.getItem('active')) {
+    //             user.tickets.push(ticket)
+    //             localStorage.setItem('users', JSON.stringify(arr))
+    //             return true
+    //         }
+    //     }
 
-        return false
-    }
+    //     return false
+    // }
 
-    static changeTicketStatus(state: 'rezervisano' | 'gledano' | 'otkazano', id: number) {
-        const active = this.getActiveUser()
-        if (active) {
-            const arr = this.retrieveUsers()
-            for (let user of arr) {
-                if (user.email == active.email) {
-                    for (let ticket of user.tickets) {
-                        if (ticket.id == id) {
-                            ticket.status = state
-                        }
-                    }
-                    localStorage.setItem('users', JSON.stringify(arr))
-                    return true
-                }
-            }
-        }
-        return false
-    }
+    // static changeTicketStatus(state: 'rezervisano' | 'gledano' | 'otkazano', id: number) {
+    //     const active = this.getActiveUser()
+    //     if (active) {
+    //         const arr = this.retrieveUsers()
+    //         for (let user of arr) {
+    //             if (user.email == active.email) {
+    //                 for (let ticket of user.tickets) {
+    //                     if (ticket.id == id) {
+    //                         ticket.status = state
+    //                     }
+    //                 }
+    //                 localStorage.setItem('users', JSON.stringify(arr))
+    //                 return true
+    //             }
+    //         }
+    //     }
+    //     return false
+    // }
 
-    static changeRating(r: number, id: number) {
-        const active = this.getActiveUser()
-        if (active) {
-            const arr = this.retrieveUsers()
-            for (let user of arr) {
-                if (user.email == active.email) {
-                    for (let film of user.watchedMovies) {
-                        if (film.movieId == id) {
-                            film.rating = r;
-                        }
-                    }
-                    localStorage.setItem('users', JSON.stringify(arr))
-                    return true
-                }
-            }
-        }
-        return false
-    }
+    // static changeRating(r: number, id: number) {
+    //     const active = this.getActiveUser()
+    //     if (active) {
+    //         const arr = this.retrieveUsers()
+    //         for (let user of arr) {
+    //             if (user.email == active.email) {
+    //                 for (let film of user.watchedMovies) {
+    //                     if (film.movieId == id) {
+    //                         film.rating = r;
+    //                     }
+    //                 }
+    //                 localStorage.setItem('users', JSON.stringify(arr))
+    //                 return true
+    //             }
+    //         }
+    //     }
+    //     return false
+    // }
 
     static changePassword(newPassword: string): boolean {
 

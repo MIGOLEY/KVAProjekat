@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { FilmService } from 'services/film.service';
 import { Film } from 'models/film';
+import { Input} from '@angular/core';
+import { UtilsService } from 'services/utils.service';
 
 @Component({
   selector: 'app-user',
@@ -34,17 +36,28 @@ import { Film } from 'models/film';
   styleUrl: './korisnik.component.css'
 })
 export class KorisnikComponent {
-  public displayedColumns: string[] = ['id', 'destination', 'flightNumber', 'airline', 'count', 'price', 'total', 'status', 'actions'];
   public user: Korisnik | null = null
   public userCopy: Korisnik | null = null
   public movies: Film[] | null = null
   public favoriteMovies: string[] = []
+  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price', 'total' , 'count', 'status', ];
+  @Input() purchaseHistory: any[] = [];
+  @Input() purchaseHistoryForUser: any[] = [];
 
   public oldPasswordValue = ''
   public newPasswordValue = ''
   public repeatPasswordValue = ''
+  ngOnInit() {
+  const purchaseHistory = localStorage.getItem('purchaseHistory');
+  this.purchaseHistory = purchaseHistory ? JSON.parse(purchaseHistory) : [];
+   for (let i = 0; i < this.purchaseHistory.length; i++){
+    if(this.purchaseHistory[i].activeUser == this.user?.email){
+      this.purchaseHistoryForUser.push(this.purchaseHistory[i]);
+    }
+   }
+  }
 
-  constructor(private router: Router) {
+  constructor(private router: Router, public utils: UtilsService) {
     if (!UserService.getActiveUser()) {
       // Korisnik aplikacije nije ulogovan
       // Vrati korisnika na homepage

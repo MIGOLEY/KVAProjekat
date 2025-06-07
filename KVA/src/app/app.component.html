@@ -1,31 +1,41 @@
-<mat-toolbar color="primary">
-    <span><i class="fa-solid fa-location-dot"></i> iMovie</span>
-    <span class="spacer"></span>
-    <a routerLink="/" mat-button>
-        <i class="fa-solid fa-house"></i>
-        <span class="link-name">Home</span>
-    </a>
+<div class="app">
+    <div class="container">
+        <mat-toolbar color="primary" class="navbar">
+            <div class="logo">
+                <span>
+                    <i class="fa-solid fa-location-dot">iMovie</i>
+                </span>
+            </div>
 
-    <a routerLink="/login" mat-button *ngIf="!service.getActiveUser()">
-        <i class="fa-solid fa-right-to-bracket"></i>
-        <span class="link-name">Login</span>
-    </a>
-    <a routerLink="/register" mat-button *ngIf="!service.getActiveUser()">
-        <i class="fa-solid fa-right-to-bracket"></i>
-        <span class="link-name">Register</span>
-    </a>
-    <a routerLink="/korisnik" mat-button *ngIf="service.getActiveUser()">
-        <i class="fa-solid fa-user"></i>
-        <span class="link-name">Korisnik</span>
-    </a>
-    <a routerLink="/korpa" mat-button *ngIf="service.getActiveUser()">
-        <i class="fa-solid fa-user"></i>
-        <span class="link-name">Vaša korpa</span>
-    </a>
-    <button mat-button *ngIf="service.getActiveUser()" (click)="doLogout()">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span class="link-name">Logout</span> 
-    </button>
-</mat-toolbar>
+            <div class="nav">
+                <a routerLink="/" mat-button>
+                    <i class="fa-solid fa-house"></i>
+                    <span class="link-name">Home</span>
+                </a>
+
+                <a routerLink="/login" mat-button *ngIf="!service.getActiveUser()">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span class="link-name">Login</span>
+                </a>
+                <a routerLink="/register" mat-button *ngIf="!service.getActiveUser()">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span class="link-name">Register</span>
+                </a>
+                <a routerLink="/korisnik" mat-button *ngIf="service.getActiveUser()">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="link-name">Korisnik</span>
+                </a>
+                <a routerLink="/korpa" mat-button *ngIf="service.getActiveUser()">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="link-name">Vaša korpa</span>
+                </a>
+                <button mat-button *ngIf="service.getActiveUser()" (click)="doLogout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="link-name">Logout</span> 
+                </button>
+            </div>
+        </mat-toolbar>
+    </div>
+</div>
 
 <router-outlet />

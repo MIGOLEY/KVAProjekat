@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #171717;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}

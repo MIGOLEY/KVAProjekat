@@ -105,10 +105,12 @@ export class UtilsService {
    Orders(movie: any) {
     // const ordered = this.orders.find(o => o.movie === movie.id);
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const ordered = orders.find((o: any) => o.movieId === movie.id);
+    const ordered = orders.find((o: any) => o.movieId === movie.movieId);
     if (ordered) {
       ordered.count += 1;
+      alert("Rezervisali ste još jednu kartu za ovaj film");
     } else {
+      alert("Rezervisali ste još jednu kartu za ovaj film");
       orders.push({
         movieId: movie.movieId,
         poster: movie.poster,
@@ -116,6 +118,8 @@ export class UtilsService {
         startDate: movie.startDate,
         title: movie.title,
         price: movie.price,
+        status: '',
+        count: 1
 
         // DODATI RATING
       });

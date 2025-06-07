@@ -29,17 +29,23 @@ import { UtilsService } from 'services/utils.service';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatSelectModule],
+    MatSelectModule,],
   templateUrl: './korpa.component.html',
   styleUrl: './korpa.component.css'
 })
 export class KorpaComponent {
-  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price'];
+  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price', 'total' , 'count', 'status', ];
+  public displayedReservationHistoryColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price', 'count', 'status', ];
+
   @Input() orders: any[] = [];
+  reservationHistory: any[] = [];
 
   ngOnInit() {
   const savedOrders = localStorage.getItem('orders');
   this.orders = savedOrders ? JSON.parse(savedOrders) : [];
+
+  const reservationHistory = localStorage.getItem('purchaseHistory');
+  this.reservationHistory = reservationHistory ? JSON.parse(reservationHistory) : [];
   }
   constructor(public utils: UtilsService){
     
@@ -49,7 +55,33 @@ export class KorpaComponent {
       window.location.reload()
   }
   getTotalPrice(): number {
-  return Number(this.orders.reduce((total, order) => total + (order.price || 0), 0));
+  return Number(this.orders.reduce((total, order) => total + (order.price * order.count || 0), 0));
 }
+Purchase() {
+    const activeUser = UserService.getActiveUser()?.email;
+    // const ordered = this.orders.find(o => o.movie === movie.id);
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    const purchaseHistory = JSON.parse(localStorage.getItem('purchaseHistory') || '[]');
+    // const bought = purchaseHistory.find((o: any) => o.movieId === movie.id);
+    // if (bought) {
+    //   bought.count += 1;
+    // }
+    for (let i = 0; i < orders.length; i++) {
+      purchaseHistory.push({
+        movieId: orders[i].movieId,
+        poster: orders[i].poster,
+        runTime: orders[i].runTime,
+        startDate: orders[i].startDate,
+        title: orders[i].title,
+        price: orders[i].price,
+        status: 'Rezervisano',
+        count: orders[i].count,
+        total: orders[i].price * orders[i].count,
+        activeUser: activeUser
+        // DODATI RATING
+      });
+    }
+    localStorage.setItem('purchaseHistory', JSON.stringify(purchaseHistory));
+  }
 
 }
