@@ -34,31 +34,46 @@ import { UtilsService } from 'services/utils.service';
   styleUrl: './korpa.component.css'
 })
 export class KorpaComponent {
-  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price', 'total' , 'count', 'status', ];
-  public displayedReservationHistoryColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price', 'count', 'status', ];
+  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'projectionDate', 'projectionTime', 'price', 'total' , 'count', 'status', /*'rating' ,*/ /*'ratingComment'*/];
+  private activeUser = UserService.getActiveUser()?.email;
 
   @Input() orders: any[] = [];
-  reservationHistory: any[] = [];
+  ordersForUser: any[] = [];
+  ordersForDifferentUsers: any[] = [];
+  purchaseHistory: any[] = [];
+  purchaseHistoryForUser: any[] = [];
 
   ngOnInit() {
   const savedOrders = localStorage.getItem('orders');
   this.orders = savedOrders ? JSON.parse(savedOrders) : [];
+  for(let i=0; i < this.orders.length; i++){
+    if(this.orders[i].activeUser == this.activeUser){
+      this.ordersForUser.push(this.orders[i]);
+    }
+    else{
+      this.ordersForDifferentUsers.push(this.orders[i]);
+    }
+  }
 
   const reservationHistory = localStorage.getItem('purchaseHistory');
-  this.reservationHistory = reservationHistory ? JSON.parse(reservationHistory) : [];
+  this.purchaseHistory = reservationHistory ? JSON.parse(reservationHistory) : [];
+  for(let i=0; i < this.purchaseHistory.length; i++){
+    if(this.purchaseHistory[i].activeUser == this.activeUser){
+      this.purchaseHistoryForUser.push(this.purchaseHistory[i]);
+    }
+  }
   }
   constructor(public utils: UtilsService){
     
   }
   clearLocalStorage(){
-      localStorage.removeItem('orders')
+      localStorage.setItem('orders', JSON.stringify(this.ordersForDifferentUsers))
       window.location.reload()
   }
   getTotalPrice(): number {
-  return Number(this.orders.reduce((total, order) => total + (order.price * order.count || 0), 0));
+  return Number(this.ordersForUser.reduce((total, ordersForUser) => total + (ordersForUser.price * ordersForUser.count || 0), 0));
 }
-Purchase() {
-    const activeUser = UserService.getActiveUser()?.email;
+Reserve() {
     // const ordered = this.orders.find(o => o.movie === movie.id);
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     const purchaseHistory = JSON.parse(localStorage.getItem('purchaseHistory') || '[]');
@@ -67,19 +82,20 @@ Purchase() {
     //   bought.count += 1;
     // }
     for (let i = 0; i < orders.length; i++) {
-      purchaseHistory.push({
-        movieId: orders[i].movieId,
-        poster: orders[i].poster,
-        runTime: orders[i].runTime,
-        startDate: orders[i].startDate,
-        title: orders[i].title,
-        price: orders[i].price,
-        status: 'Rezervisano',
-        count: orders[i].count,
-        total: orders[i].price * orders[i].count,
-        activeUser: activeUser
-        // DODATI RATING
-      });
+      if(orders[i].activeUser == this.activeUser){
+        purchaseHistory.push({
+          movieId: orders[i].movieId,
+          poster: orders[i].poster,
+          runTime: orders[i].runTime,
+          startDate: orders[i].startDate,
+          title: orders[i].title,
+          price: orders[i].price,
+          status: 'Rezervisano',
+          count: orders[i].count,
+          total: orders[i].price * orders[i].count,
+          activeUser: this.activeUser
+        });
+      }
     }
     localStorage.setItem('purchaseHistory', JSON.stringify(purchaseHistory));
   }

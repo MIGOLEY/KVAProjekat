@@ -1,5 +1,5 @@
-<div *ngIf="orders.length > 0">
-  <table mat-table [dataSource]="orders">
+<div *ngIf="ordersForUser.length > 0">
+  <table mat-table [dataSource]="ordersForUser">
         <ng-container matColumnDef="movieId">
             <th mat-header-cell *matHeaderCellDef class="id">
                 <i class="fa-solid fa-hashtag"></i> ID
@@ -30,9 +30,23 @@
 
         <ng-container matColumnDef="startDate">
             <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Datum
+                <i class="fa-solid fa-hashtag"></i> Datum izlaska
             </th>
             <td mat-cell *matCellDef="let element" class="id"> {{element.startDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="projectionDate">
+            <th mat-header-cell *matHeaderCellDef class="id">
+                <i class="fa-solid fa-hashtag"></i> Datum projekcije
+            </th>
+            <td mat-cell *matCellDef="let element" class="id"> {{element.projectionDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="projectionTime">
+            <th mat-header-cell *matHeaderCellDef class="id">
+                <i class="fa-solid fa-hashtag"></i> Vreme projekcije
+            </th>
+            <td mat-cell *matCellDef="let element" class="id"> {{element.projectionTime}} </td>
         </ng-container>
 
         <ng-container matColumnDef="price">
@@ -83,80 +97,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <h2>Vaša lista rezervisanih filmova</h2>
-  <table mat-table [dataSource]="reservationHistory">
-        <ng-container matColumnDef="movieId">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> ID
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> {{element.movieId}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Titl
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> {{element.title}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="poster">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Poster
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> <img src="{{element.poster}}" style="max-height: 50px;"> </td>
-        </ng-container>
-
-        <ng-container matColumnDef="runTime">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Trajanje
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> {{utils.round(element.runTime/60)}}h {{utils.leftover(element.runTime)}}min </td>
-        </ng-container>
-
-        <ng-container matColumnDef="startDate">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Datum
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> {{element.startDate}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Cena
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> {{element.price}} RSD </td>
-        </ng-container>
-
-        <ng-container matColumnDef="total">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Ukupno
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> {{element.price * element.count}} RSD </td>
-        </ng-container>
-
-        <ng-container matColumnDef="count">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Količina
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> {{element.count}} kom. </td>
-        </ng-container>
-
-        <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef class="id">
-                <i class="fa-solid fa-hashtag"></i> Status
-            </th>
-            <td mat-cell *matCellDef="let element" class="id"> {{element.status}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedReservationHistoryColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedReservationHistoryColumns;"></tr>
-  </table>
-
 </div>
-<!--  -->
-
-<!--  -->
-<button (click)="Purchase()">Potvrdite kupovinu</button>
+<button (click)="Reserve()">Potvrdite kupovinu</button>
 <br>
 <p>Sveukupna suma svih rezervacija: {{ getTotalPrice() }}</p>
 <button (click)="clearLocalStorage()">Očisti porudžbine</button>

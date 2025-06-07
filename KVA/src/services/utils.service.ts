@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserService } from './korisnik.service';
 
 @Injectable({
   providedIn: 'root'
@@ -86,7 +87,17 @@ export class UtilsService {
       [79, 1499],
       [80, 299]
  ]);
-  constructor() { }
+  public projectionDate: string[] = []; 
+  public projectionTime: string[] = ['12:00','14:30','15:30','17:00','19:00']; 
+  constructor() { 
+    let datestring
+    for(let i=0; i < 5; i++){
+      let date = new Date()
+      date.setDate(date.getDate() + i)
+      datestring = date.toISOString().slice(0, 10)
+      this.projectionDate.push(datestring)
+    }
+  }
 
   public generateMovieImage(poster: string) {
     return poster;
@@ -102,24 +113,30 @@ export class UtilsService {
     return number % 60
   }
 
-   Orders(movie: any) {
+   Orders(movie: any, userInputDate: string, userInputTime: string) {
     // const ordered = this.orders.find(o => o.movie === movie.id);
+    const activeUser = UserService.getActiveUser()?.email;
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const ordered = orders.find((o: any) => o.movieId === movie.movieId);
+    const ordered = orders.find((o: any) => (o.movieId === movie.movieId) && (o.projectionTime === userInputTime) && (o.projectionDate === userInputDate) );
+    
     if (ordered) {
       ordered.count += 1;
       alert("Rezervisali ste još jednu kartu za ovaj film");
     } else {
-      alert("Rezervisali ste još jednu kartu za ovaj film");
+      alert("Dodali ste film u vašu korpu");
       orders.push({
         movieId: movie.movieId,
         poster: movie.poster,
         runTime: movie.runTime,
         startDate: movie.startDate,
+        projectionDate: userInputDate,
+        projectionTime: userInputTime, 
         title: movie.title,
         price: movie.price,
         status: '',
-        count: 1
+        rating: '',
+        count: 1,
+        activeUser: activeUser
 
         // DODATI RATING
       });

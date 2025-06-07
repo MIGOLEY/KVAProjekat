@@ -40,7 +40,7 @@ export class KorisnikComponent {
   public userCopy: Korisnik | null = null
   public movies: Film[] | null = null
   public favoriteMovies: string[] = []
-  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price', 'total' , 'count', 'status', ];
+  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price', 'total' , 'count', 'status'/*, 'rating'*/];
   @Input() purchaseHistory: any[] = [];
   @Input() purchaseHistoryForUser: any[] = [];
 

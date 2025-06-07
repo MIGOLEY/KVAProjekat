@@ -23,6 +23,9 @@ export interface Film {
     updatedAt: null;
     price: number;
     state: 'rezervisano' | 'gledano' | 'otkazano';
+    projectionDate: string[];
+    projectionTime: string[];
+    // rating: number;
 
     // movieId: number;
     // title: string;

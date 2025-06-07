@@ -9,7 +9,18 @@
             <!-- <p>Režiser: {{movie.director}}</p> -->
             <!-- <p>Glumci: {{movie.actors}}</p> -->
             <p>Datum izlaska: {{utils.formatDate(movie.startDate)}}</p>
-            <p>Datum projekcije: {{utils.formatDate(movie.startDate)}} </p>
+            <p>Datum projekcije:</p>
+            <select [(ngModel)]="userInputDate">
+                <option *ngFor="let date of movie.projectionDate" [value]="date">
+                    {{date}} 
+                </option>
+            </select>
+            <p>Vreme projekcije:</p>
+            <select [(ngModel)]=" userInputTime">
+                <option *ngFor="let time of movie.projectionTime" [value]="time">
+                    {{time}} 
+                </option>
+            </select>
             <!-- <p>Cena karte: {{movie.price}}</p> -->
             <p>Ocena gledalaca: {{movie.rating}}</p>
             <p>
@@ -28,7 +39,7 @@
             <a mat-button [routerLink]="['/film/', movie.movieId]">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Više detalja
             </a>
-            <a mat-button (click)="utils.Orders(movie)">
+            <a mat-button (click)="utils.Orders(movie, userInputDate, userInputTime)">
                 <i class="fa-solid fa-cart-shopping"></i> Rezervišite kartu
             </a>
         </mat-card-actions>
