@@ -19,13 +19,10 @@ import { UtilsService } from 'services/utils.service';
 @Component({
   selector: 'app-korpa',
   imports: [NgIf,
-    NgFor,
     MatButtonModule,
     MatCardModule,
     MatTableModule,
-    RouterLink,
     MatExpansionModule,
-    MatAccordion,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
@@ -34,7 +31,7 @@ import { UtilsService } from 'services/utils.service';
   styleUrl: './korpa.component.css'
 })
 export class KorpaComponent {
-  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'projectionDate', 'projectionTime', 'price', 'total' , 'count', 'status', /*'rating' ,*/ /*'ratingComment'*/];
+  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'projectionDate', 'projectionTime', 'price', 'total' , 'count', 'status', 'actions'];
   private activeUser = UserService.getActiveUser()?.email;
 
   @Input() orders: any[] = [];
@@ -54,7 +51,6 @@ export class KorpaComponent {
       this.ordersForDifferentUsers.push(this.orders[i]);
     }
   }
-
   const reservationHistory = localStorage.getItem('purchaseHistory');
   this.purchaseHistory = reservationHistory ? JSON.parse(reservationHistory) : [];
   for(let i=0; i < this.purchaseHistory.length; i++){
@@ -74,13 +70,8 @@ export class KorpaComponent {
   return Number(this.ordersForUser.reduce((total, ordersForUser) => total + (ordersForUser.price * ordersForUser.count || 0), 0));
 }
 Reserve() {
-    // const ordered = this.orders.find(o => o.movie === movie.id);
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    const orders = this.ordersForUser
     const purchaseHistory = JSON.parse(localStorage.getItem('purchaseHistory') || '[]');
-    // const bought = purchaseHistory.find((o: any) => o.movieId === movie.id);
-    // if (bought) {
-    //   bought.count += 1;
-    // }
     for (let i = 0; i < orders.length; i++) {
       if(orders[i].activeUser == this.activeUser){
         purchaseHistory.push({
@@ -88,6 +79,8 @@ Reserve() {
           poster: orders[i].poster,
           runTime: orders[i].runTime,
           startDate: orders[i].startDate,
+          projectionDate: orders[i].projectionDate,
+          projectionTime: orders[i].projectionTime,
           title: orders[i].title,
           price: orders[i].price,
           status: 'Rezervisano',
@@ -98,6 +91,32 @@ Reserve() {
       }
     }
     localStorage.setItem('purchaseHistory', JSON.stringify(purchaseHistory));
+    localStorage.setItem('orders', JSON.stringify(this.ordersForDifferentUsers))
+    //localStorage.removeItem('purchaseHistory')
+    window.location.reload()
   }
-
+  count(){
+    this.ordersForUser = this.ordersForUser.map(order => ({
+    ...order,
+    count: document.getElementById("count")
+    }));
+  }
+  getStatus(order: any):string{
+    for(let i = 0; i < this.purchaseHistoryForUser.length; i++){
+      if(order.movieId === this.purchaseHistoryForUser[i].movieId){
+        return "Gledano"
+      }
+    }
+    return ""
+  }
+  removeItem(order: any){
+    let tempOrders = this.ordersForDifferentUsers
+    for(let i = 0; i < this.ordersForUser.length; i++){
+      if(order != this.ordersForUser[i]){
+        tempOrders.push(this.ordersForUser[i])
+      }
+    }
+    localStorage.setItem('orders', JSON.stringify(tempOrders))
+    window.location.reload()
+  }
 }

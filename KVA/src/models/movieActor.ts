@@ -4,5 +4,5 @@ export interface MovieActor {
     movieActorId: number;
     movieId: number;
     actorId: number;
-    actor: Actor[];
+    actor: Actor;
 }

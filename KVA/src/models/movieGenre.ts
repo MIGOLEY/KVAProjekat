@@ -4,5 +4,5 @@ export interface MovieGenre {
     movieGenreId: number;
     movieId: number;
     genreId: number;
-    genre: Genre[];
+    genre: Genre;
 }

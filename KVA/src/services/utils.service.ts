@@ -109,6 +109,9 @@ export class UtilsService {
   public round(number: number){
     return Math.round(number)
   }
+  public round2(number: number){
+    return Math.round(number * 100) / 100
+  }
   public leftover(number: number){
     return number % 60
   }
@@ -122,7 +125,7 @@ export class UtilsService {
     if (ordered) {
       ordered.count += 1;
       alert("Rezervisali ste još jednu kartu za ovaj film");
-    } else {
+    } else if(userInputDate != '' && userInputTime != '') {
       alert("Dodali ste film u vašu korpu");
       orders.push({
         movieId: movie.movieId,
@@ -141,8 +144,12 @@ export class UtilsService {
         // DODATI RATING
       });
     }
+    else{
+        alert("Unesite datum i vreme projekcije");
+      }
     localStorage.setItem('orders', JSON.stringify(orders));
   }
+  
 }
 
 

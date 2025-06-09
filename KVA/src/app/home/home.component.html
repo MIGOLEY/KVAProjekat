@@ -65,33 +65,19 @@
         <mat-card-content>
             <h1>{{movie.title}}</h1>
             <p>Naziv filma: {{movie.title}}</p>
-            <!-- <p>Žanr: {{movie.genre}}</p> -->
             <p>Trajanje filma: {{utils.round(movie.runTime/60)}}h {{utils.leftover(movie.runTime)}}min</p>
-            <!-- <p>Režiser: {{movie.director}}</p> -->
-            <!-- <p>Glumci: {{movie.actors}}</p> -->
             <p>Datum izlaska: {{utils.formatDate(movie.startDate)}}</p>
-            <p>Datum projekcije: {{utils.formatDate(movie.startDate)}} </p>
-            <!-- <p>Cena karte: {{movie.price}}</p> -->
-            <p>Ocena gledalaca: {{movie.rating}}</p>
+            <p>Ocena gledalaca: {{utils.round2(ProsecnaOcena(movie.movieId))}}</p>
             <p>
                 <label>
                     Cena karte: {{movie.price}} RSD
-                    <!-- <input #priceInput type="number" min="0"
-                            [value]="priceMap.get(movie.movieId) || 0"
-                            (change)="priceMap.setmovie.movieId] = priceInput.valueAsNumber" /> -->
                 </label>
-                <!-- <button (click)="submitPrices()">
-                    Sačuvaj promene cena
-                </button> -->
             </p>
         </mat-card-content>
         <mat-card-actions>
             <a mat-button [routerLink]="['/film/', movie.movieId]">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Više detalja
             </a>
-            <!-- <a mat-button (click)="">
-                <i class="fa-solid fa-cart-shopping"></i> Rezervišite kartu
-            </a> -->
         </mat-card-actions>
     </mat-card> 
 </div>

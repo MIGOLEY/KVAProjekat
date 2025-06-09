@@ -1,8 +1,6 @@
 export interface Recenzija {
-    id: number;
-    userId: number;
     movieId: number;
-    username: string;
+    email: string;
     rating: number;
     comment: string;
 }

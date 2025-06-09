@@ -25,7 +25,7 @@ export interface Film {
     state: 'rezervisano' | 'gledano' | 'otkazano';
     projectionDate: string[];
     projectionTime: string[];
-    // rating: number;
+    rating?: number;
 
     // movieId: number;
     // title: string;
@@ -40,5 +40,4 @@ export interface Film {
     // price: number;
     // image: string;
     // createdAt: string;
-    rating: null | 1 | 2 | 3 | 4 | 5 | number;
 }

@@ -21,7 +21,7 @@ import express, { Request, Response } from 'express';
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, NgFor, MatButtonModule, MatCardModule, RouterLink, JsonPipe, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule],
+  imports: [NgIf, NgFor, MatButtonModule, MatCardModule, RouterLink, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -43,6 +43,7 @@ export class HomeComponent {
   genreId: number | null = null
   directorId: number | null = null
   orders: any[] = [];
+  public userRatings: any[] = [];
 
   constructor(public utils: UtilsService) {
     // const savedPrices = localStorage.getItem('moviePrices');
@@ -82,6 +83,8 @@ export class HomeComponent {
         this.directors = rsp.data
       )
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
+      const ratings = localStorage.getItem('userRatings')
+      this.userRatings = ratings ? JSON.parse(ratings) : [];
       
     // localStorage.setItem('moviePrices', JSON.stringify([...this.priceMap]));
   }
@@ -140,6 +143,17 @@ export class HomeComponent {
     this.directorId = null
     this.actorId = null
   }
+  ProsecnaOcena(movieId: number): number{
+    let sum = 0
+    let br = 0
+    for(let i = 0; i < this.userRatings.length; i++){
+      if(this.userRatings[i].movieId == movieId){
+        sum += Number(this.userRatings[i].rating)
+        br++
+      }
+    }
+    return sum/br
+}
 
   // updatePrice() {
   //   for (let [movieId, price] of this.priceMap) {

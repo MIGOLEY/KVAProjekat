@@ -40,7 +40,7 @@ export class KorisnikComponent {
   public userCopy: Korisnik | null = null
   public movies: Film[] | null = null
   public favoriteMovies: string[] = []
-  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'price', 'total' , 'count', 'status'/*, 'rating'*/];
+  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'projectionDate', 'projectionTime','price', 'total' , 'count', 'status','buttons'/*, 'rating'*/];
   @Input() purchaseHistory: any[] = [];
   @Input() purchaseHistoryForUser: any[] = [];
 
@@ -109,6 +109,27 @@ export class KorisnikComponent {
     this.user = UserService.getActiveUser()
     alert('User was updated')
   }
+
+  
+  Pay(movie: any){
+    movie.status = "Gledano"
+    localStorage.setItem('purchaseHistory', JSON.stringify(this.purchaseHistory));
+  }
+
+  Cancel(movie : any){
+      movie.status = 'Otkazano'
+    localStorage.setItem('purchaseHistory', JSON.stringify(this.purchaseHistory));
+  }
+
+  // setRating(element: any, rating: number){
+  //   element.rating = rating;
+  //   this.updatePurchaseHistory(element);
+  // }
+
+  // private updatePurchaseHistory(element: any){
+  //   const purchaseHistory = JSON.parse(localStorage.getItem('purchaseHistory') || '[]');
+  //   const index = purchaseHistory
+  // }
 
   // public doPay(order: OrderModel) {
   //   if (UserService.changeOrderStatus('paid', order.id)) {

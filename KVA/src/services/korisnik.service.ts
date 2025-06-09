@@ -80,7 +80,6 @@ export class UserService {
         return null
     }
 
-
     // static buyTicket(ticket: Ticket) {
     //     const arr = this.retrieveUsers()
     //     for (let user of arr) {
