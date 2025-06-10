@@ -6,13 +6,8 @@
 }
 
 body {
-    background-color: #f9f9f9;
-    color: #171717;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
+    background-color: #141414;
+    color: #f9f9f9;
 }
 
 .container {

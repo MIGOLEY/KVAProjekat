@@ -18,7 +18,6 @@ import { Actor } from 'models/actor';
 import { Director } from 'models/director';
 import express, { Request, Response } from 'express';
 
-
 @Component({
   selector: 'app-home',
   imports: [NgIf, NgFor, MatButtonModule, MatCardModule, RouterLink, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule],
@@ -27,11 +26,9 @@ import express, { Request, Response } from 'express';
 })
 export class HomeComponent {
   service = FilmService
-  //   public movies: Film[] | null = null
   public movies: Film[] = []
   public error: string | null = null
   public genres: Genre[] | null = null
-  // public filteredGeners: Observable< Genre[] > | null = null
   public actors: Actor[] | null = null
   public directors: Director[] | null = null
   userInputName: string = ''
@@ -46,20 +43,6 @@ export class HomeComponent {
   public userRatings: any[] = [];
 
   constructor(public utils: UtilsService) {
-    // const savedPrices = localStorage.getItem('moviePrices');
-    // if (savedPrices) {
-    //   this.priceMap = JSON.parse(savedPrices);
-    // }
-
-    // Ako ne bude radilo, vratiti ovo:
-
-    // FilmService.getMoviesSearch(this.searchValue)
-    //   .then(rsp => 
-    //     this.movies = rsp.data
-    //   )
-    //   .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
-
-
     FilmService.getMoviesSearch(this.searchValue)
       .then(rsp => {
         this.movies = rsp.data.map((movie: Film) => ({
@@ -85,12 +68,7 @@ export class HomeComponent {
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
       const ratings = localStorage.getItem('userRatings')
       this.userRatings = ratings ? JSON.parse(ratings) : [];
-      
-    // localStorage.setItem('moviePrices', JSON.stringify([...this.priceMap]));
   }
-  // onGenreSelected(){
-  //   const
-  // }
   Search() {
     sessionStorage.setItem('inputName', this.userInputName);
 
@@ -102,20 +80,17 @@ export class HomeComponent {
 
     FilmService.getMoviesSearch(name)
       .then(rsp =>
-        this.movies = rsp.data
+        this.movies = rsp.data.map((movie: Film) => ({
+          ...movie,
+          price: this.utils.priceMap.get(movie.movieId)
+        }))
       )
 
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
   }
 
   Filter() {
-    // sessionStorage.setItem('inputActor', this.userInputActor);
-    // sessionStorage.setItem('inputGenre', this.userInputGenre);
-    // sessionStorage.setItem('inputDirector', this.userInputDirector);
 
-    // let actor = sessionStorage.getItem('inputActor');
-    // let genre = sessionStorage.getItem('inputGenre');
-    // let director = sessionStorage.getItem('inputDirector');
     let actor = this.userInputActor;
     let genre = this.userInputGenre;
     let director = this.userInputDirector;
@@ -134,7 +109,10 @@ export class HomeComponent {
 
     FilmService.getMoviesFilter(this.actorId, this.genreId, this.directorId)
       .then(rsp =>
-        this.movies = rsp.data
+        this.movies = rsp.data.map((movie: Film) => ({
+          ...movie,
+          price: this.utils.priceMap.get(movie.movieId)
+        }))
       )
 
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
@@ -152,18 +130,91 @@ export class HomeComponent {
         br++
       }
     }
-    return sum/br
-}
+    if((sum/br) > 0){
+      return sum/br
+    }
+    else{
+      return 0
+    }
+  }
+  //mozda
+  Slider(){
+    // Set the price gap
+    const priceGap: number = 500;
 
-  // updatePrice() {
-  //   for (let [movieId, price] of this.priceMap) {
-  //     this.movies = this.movies.map(movie => movie.movieId === movieId ? { ...movie, price } : movie);
-  //   }
-  //   localStorage.setItem('moviePrices', JSON.stringify(this.priceMap));
-  // }
+    // Get the price input elements
+    const priceInputvalue: NodeListOf<HTMLInputElement> = document.querySelectorAll(".price-input input");
 
-  // submitPrices() {
-  //   localStorage.setItem('moviePrices', JSON.stringify(this.priceMap));
-  //   alert('Cena je uspešno sačuvana!')
-  // }
+    // Assuming these elements exist:
+    const rangeInputvalue: NodeListOf<HTMLInputElement> = document.querySelectorAll(".range-input input");
+    const rangevalue: HTMLElement = document.querySelector(".slider .progress") as HTMLElement;
+
+    for (let i = 0; i < priceInputvalue.length; i++) {
+        priceInputvalue[i].addEventListener("input", (e: Event) => {
+            const target = e.target as HTMLInputElement;
+
+            let minp = parseInt(priceInputvalue[0].value);
+            let maxp = parseInt(priceInputvalue[1].value);
+            let diff = maxp - minp;
+
+            if (minp < 0) {
+                alert("minimum price cannot be less than 0");
+                priceInputvalue[0].value = "0";
+                minp = 0;
+            }
+
+            if (maxp > 10000) {
+                alert("maximum price cannot be greater than 10000");
+                priceInputvalue[1].value = "10000";
+                maxp = 10000;
+            }
+
+            if (minp > maxp - priceGap) {
+                priceInputvalue[0].value = (maxp - priceGap).toString();
+                minp = maxp - priceGap;
+
+                if (minp < 0) {
+                    priceInputvalue[0].value = "0";
+                    minp = 0;
+                }
+            }
+
+            if (diff >= priceGap && maxp <= parseInt(rangeInputvalue[1].max)) {
+                if (target.classList.contains("min-input")) {
+                    rangeInputvalue[0].value = minp.toString();
+                    let value1 = parseInt(rangeInputvalue[0].max);
+                    rangevalue.style.left = `${(minp / value1) * 100}%`;
+                } else {
+                    rangeInputvalue[1].value = maxp.toString();
+                    let value2 = parseInt(rangeInputvalue[1].max);
+                    rangevalue.style.right = `${100 - (maxp / value2) * 100}%`;
+                }
+            }
+        });
+    }
+
+    // Add event listeners to range input elements
+    for (let i = 0; i < rangeInputvalue.length; i++) {
+      rangeInputvalue[i].addEventListener("input", (e: Event) => {
+        const target = e.target as HTMLInputElement;
+
+        let minVal = parseInt(rangeInputvalue[0].value);
+        let maxVal = parseInt(rangeInputvalue[1].value);
+        let diff = maxVal - minVal;
+
+        if (diff < priceGap) {
+            if (target.classList.contains("min-range")) {
+                rangeInputvalue[0].value = (maxVal - priceGap).toString();
+            } else {
+                rangeInputvalue[1].value = (minVal + priceGap).toString();
+            }
+        } else {
+            priceInputvalue[0].value = minVal.toString();
+            priceInputvalue[1].value = maxVal.toString();
+            rangevalue.style.left = `${(minVal / parseInt(rangeInputvalue[0].max)) * 100}%`;
+            rangevalue.style.right = `${100 - (maxVal / parseInt(rangeInputvalue[1].max)) * 100}%`;
+        }
+      });
+    }
+  }
 }

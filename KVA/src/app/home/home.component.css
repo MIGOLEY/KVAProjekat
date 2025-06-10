@@ -1,3 +1,137 @@
-body {
-    background-color: #000;
+.home .search-bar {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.home .search-bar input {
+    width: 600px;
+    height: 35px;
+    padding: 3px;
+    padding-left: 10px;
+    border-radius: 100px;
+    background-color: #585858;
+    border: 1px solid #222;
+    color: #f9f9f9;
+    font-size: 14px;
+    margin-right: 10px;
+    box-shadow: inset 0 0 10px #222;
+}
+
+.home .search-bar input:focus {
+    border: 1px solid #222;
+    outline: none;
+}
+
+.home .search-bar button {
+    border-radius: 100px;
+    outline: none;
+    border: 1px solid #222222;
+    color: #f9f9f9;
+    background-color: #222222;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.home .search-bar button:hover {
+    color: #222222;
+    background-color: #f9f9f9;
+    border: 1px solid #f9f9f9;
+}
+
+.home .details-box {
+    margin-bottom: 15px;
+}
+
+.home .details-box select {
+    background-color: #222222;
+    color: #f9f9f9;
+    width: 200px;
+    margin-right: 10px;
+    padding: 3px;
+    height: 30px;
+    border: 1px solid #222222;
+    border-radius: 100px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.home .details-box label {
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.home .details-box input {
+    background-color: #222222;
+    color: #f9f9f9;
+    outline: none;
+    border: 1px solid #222222;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 100px;
+}
+
+.home .details-box .confirm-params-btn {
+    border-radius: 100px;
+    outline: none;
+    border: 1px solid #222222;
+    color: #f9f9f9;
+    background-color: #222222;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 10px;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.home .details-box .confirm-params-btn:hover {
+    color: #222222;
+    background-color: #f9f9f9;
+    border: 1px solid #f9f9f9;
+}
+
+.home .movies-container{
+    display: block;
+}
+
+.home .movies-container mat-card {
+    margin-bottom: 20px;
+    padding: 30px;
+    border: 2px solid #222222;
+    border-radius: 10px;
+    background-color: #222222;
+    color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.home .movies-container mat-card .movie-box {
+    display: flex;
+}
+
+.home .movies-container mat-card mat-card-actions .more-details {
+    border: 1px solid #09c952;
+    color: #09c952;
+    border-radius: 100px;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+.home .movies-container mat-card mat-card-actions .more-details:hover {
+    background-color: #09c952;
+    color: #222222;
+}
+
+.home .movies-container mat-card mat-card-actions .book {
+    border: 1px solid #c9c909;
+    color: #c9c909;
+    border-radius: 100px;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+.home .movies-container mat-card mat-card-actions .book:hover {
+    background-color: #c9c909;
+    color: #222222;
 }

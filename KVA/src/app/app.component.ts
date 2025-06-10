@@ -15,13 +15,12 @@ import { FormsModule,  ReactiveFormsModule, FormGroup} from '@angular/forms';
 
 export class AppComponent {
   title = 'KVA';
-  search = "";
 
   public service = UserService
   public constructor(private router: Router) {}
   public doLogout() {
     localStorage.removeItem('active')
     this.router.navigate(['/login'])
-    alert(this.search);
+    alert("Izlogovani ste");
   }
 }

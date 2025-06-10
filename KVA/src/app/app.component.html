@@ -10,16 +10,16 @@
             <div class="nav">
                 <a routerLink="/" mat-button>
                     <i class="fa-solid fa-house"></i>
-                    <span class="link-name">Home</span>
+                    <span class="link-name">Početna</span>
                 </a>
 
                 <a routerLink="/login" mat-button *ngIf="!service.getActiveUser()">
                     <i class="fa-solid fa-right-to-bracket"></i>
-                    <span class="link-name">Login</span>
+                    <span class="link-name">Uloguj se</span>
                 </a>
                 <a routerLink="/register" mat-button *ngIf="!service.getActiveUser()">
                     <i class="fa-solid fa-right-to-bracket"></i>
-                    <span class="link-name">Register</span>
+                    <span class="link-name">Registruj se</span>
                 </a>
                 <a routerLink="/korisnik" mat-button *ngIf="service.getActiveUser()">
                     <i class="fa-solid fa-user"></i>
@@ -31,7 +31,7 @@
                 </a>
                 <button mat-button *ngIf="service.getActiveUser()" (click)="doLogout()">
                     <i class="fa-solid fa-right-from-bracket"></i>
-                    <span class="link-name">Logout</span> 
+                    <span class="link-name">Izloguj se</span> 
                 </button>
             </div>
         </mat-toolbar>

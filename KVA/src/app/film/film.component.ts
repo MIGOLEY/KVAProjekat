@@ -30,6 +30,7 @@ export class FilmComponent {
   public userInputTime: string = ""
   public userInputRating: number = 0
   public userInputComment: string = ""
+  public userInputCount: number = 1
   public user: Korisnik | null = UserService.getActiveUser()
   public status: string = ""
   public purchaseHistory: any[] = [];
@@ -109,21 +110,20 @@ export class FilmComponent {
     this.userReview = this.userRatings.filter(rating => rating.movieId === this.movies?.movieId);
   }
 
-  ProsecnaOcena(): number{
+  ProsecnaOcena(movieId: number): number{
     let sum = 0
     let br = 0
     for(let i = 0; i < this.userRatings.length; i++){
-      if(this.userRatings[i].movieId == this.movies?.movieId){
+      if(this.userRatings[i].movieId == movieId){
         sum += Number(this.userRatings[i].rating)
         br++
       }
     }
-    return sum/br
+    if((sum/br) > 0){
+      return sum/br
+    }
+    else{
+      return 0
+    }
 }
-
-/*
-const average = (numbers: number[]) => sum(numbers) / numbers.length;
-
-const sum = (numbers: number[]) => numbers.reduce((total, aNumber) => total + aNumber, 0);
-*/
 }

@@ -26,12 +26,14 @@ import { UtilsService } from 'services/utils.service';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatSelectModule,],
+    MatSelectModule,
+    RouterLink,
+],
   templateUrl: './korpa.component.html',
   styleUrl: './korpa.component.css'
 })
 export class KorpaComponent {
-  public displayedColumns: string[] = ['movieId', 'title', 'poster', 'runTime', 'startDate', 'projectionDate', 'projectionTime', 'price', 'total' , 'count', 'status', 'actions'];
+  public displayedColumns: string[] = ['title', 'poster', 'runTime', 'startDate', 'projectionDate', 'projectionTime', 'price', 'total' , 'count', 'status', 'actions'];
   private activeUser = UserService.getActiveUser()?.email;
 
   @Input() orders: any[] = [];
@@ -67,13 +69,23 @@ export class KorpaComponent {
       window.location.reload()
   }
   getTotalPrice(): number {
-  return Number(this.ordersForUser.reduce((total, ordersForUser) => total + (ordersForUser.price * ordersForUser.count || 0), 0));
+  let total = 0
+  for(let i = 0; i < this.ordersForUser.length; i++){
+    if(this.ordersForUser[i].count > 0){
+      total += (Number(this.ordersForUser[i].count) * Number(this.ordersForUser[i].price))
+    }
+    else if(this.ordersForUser[i].count <= 0){
+      total += Number(this.ordersForUser[i].price)
+    }
+  }
+  return total
+  //return Number(this.ordersForUser.reduce((total, ordersForUser) => total + (ordersForUser.price * ordersForUser.count || 0), 0));
 }
 Reserve() {
     const orders = this.ordersForUser
     const purchaseHistory = JSON.parse(localStorage.getItem('purchaseHistory') || '[]');
     for (let i = 0; i < orders.length; i++) {
-      if(orders[i].activeUser == this.activeUser){
+      if(orders[i].activeUser == this.activeUser && orders[i].count > 0){
         purchaseHistory.push({
           movieId: orders[i].movieId,
           poster: orders[i].poster,
@@ -89,16 +101,20 @@ Reserve() {
           activeUser: this.activeUser
         });
       }
+      else{
+        alert('Unesite validnu količinu rezervacija')
+        return;
+      }
     }
     localStorage.setItem('purchaseHistory', JSON.stringify(purchaseHistory));
     localStorage.setItem('orders', JSON.stringify(this.ordersForDifferentUsers))
-    //localStorage.removeItem('purchaseHistory')
     window.location.reload()
+    alert('Vaša rezervacija je dodata u istoriju na vašem nalogu')
   }
   count(){
     this.ordersForUser = this.ordersForUser.map(order => ({
-    ...order,
-    count: document.getElementById("count")
+      ...order,
+      count: document.getElementById("count")
     }));
   }
   getStatus(order: any):string{

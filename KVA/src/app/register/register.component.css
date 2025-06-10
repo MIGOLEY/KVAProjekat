@@ -1,0 +1,50 @@
+.register .auth-card {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.register .auth-card mat-card-header {
+    display: flex;
+    justify-content: center;
+}
+
+.register .auth-card mat-card-content mat-form-field {
+    display: block;
+    margin-left: 450px;
+    margin-right: 450px;
+}
+
+.register .auth-card mat-card-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.register .auth-card mat-card-actions .btns-holder {
+    width: 250px;
+}
+
+.register .auth-card mat-card-actions .btns-holder button {
+    display: block;
+    text-align: center;
+    width: 100%;
+    color: #141414;
+    background-color: #f9f9f9;
+    border-radius: 100px;
+    border: 1px solid #f9f9f9;
+    margin-bottom: 15px;
+    transition: 0.2s;
+}
+
+.register .auth-card mat-card-actions .btns-holder button:hover {
+    background-color: #141414;
+    color: #f9f9f9;
+}
+
+.register .auth-card mat-card-actions .btns-holder a {
+    text-decoration: underline;
+}
+
+.register .auth-card mat-card-actions .btns-holder a:hover {
+    text-decoration: none;
+}

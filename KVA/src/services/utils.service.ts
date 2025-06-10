@@ -103,8 +103,8 @@ export class UtilsService {
     return poster;
   }
 
-    public formatDate(iso: string) {
-    return new Date(iso).toLocaleString('sr-RS')
+  public formatDate(iso: string) {
+    return new Date(iso).toLocaleString('sr-RS').slice(0,12)
   }
   public round(number: number){
     return Math.round(number)
@@ -115,13 +115,22 @@ export class UtilsService {
   public leftover(number: number){
     return number % 60
   }
+  public multiply(cena: number, kolicina: number): number{
+    if(kolicina>0){
+      return cena*kolicina
+    }
+    else{
+      return cena*1
+    }
+  }
 
-   Orders(movie: any, userInputDate: string, userInputTime: string) {
-    // const ordered = this.orders.find(o => o.movie === movie.id);
+   Orders(movie: any, userInputDate: string, userInputTime: string, userInputCount: number) {
     const activeUser = UserService.getActiveUser()?.email;
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     const ordered = orders.find((o: any) => (o.movieId === movie.movieId) && (o.projectionTime === userInputTime) && (o.projectionDate === userInputDate) );
-    
+    if(userInputCount <= 0){
+      userInputCount = 1
+    }
     if (ordered) {
       ordered.count += 1;
       alert("Rezervisali ste još jednu kartu za ovaj film");
@@ -138,10 +147,8 @@ export class UtilsService {
         price: movie.price,
         status: '',
         rating: '',
-        count: 1,
+        count: userInputCount,
         activeUser: activeUser
-
-        // DODATI RATING
       });
     }
     else{
