@@ -70,7 +70,7 @@ export class UserService {
             return null
 
         for (let user of this.retrieveUsers()) {
-            if (user.email == localStorage.getItem('active')) {
+            if (user.username == localStorage.getItem('active')) {
                 return user
             }
         }
