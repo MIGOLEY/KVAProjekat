@@ -165,13 +165,13 @@ export class UtilsService {
   }
   
    Orders(movie: any, userInputDate: string, userInputTime: string, userInputCount: number) {
-    const activeUser = UserService.getActiveUser()?.email;
+    const activeUser = UserService.getActiveUser()?.username;
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     const ordered = orders.find((o: any) => (o.movieId === movie.movieId) && (o.projectionTime === userInputTime) && (o.projectionDate === userInputDate) );
-    if (ordered && ordered.count < 10) {
+    if (ordered && ordered.count < 10 && activeUser) {
       ordered.count += 1;
       alert("Rezervisali ste još jednu kartu za ovaj film");
-    } else if(userInputDate != '' && userInputTime != '' && userInputCount > 0 && userInputCount <= 10) {
+    } else if(userInputDate != '' && userInputTime != '' && userInputCount > 0 && userInputCount <= 10 && activeUser) {
       alert("Dodali ste film u vašu korpu");
       orders.push({
         movieId: movie.movieId,
