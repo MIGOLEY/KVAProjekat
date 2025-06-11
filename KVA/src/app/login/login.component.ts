@@ -31,6 +31,6 @@ export class LoginComponent {
       return
     }
 
-    alert('Bad email or password')
+    alert('Bad username or password')
   }
 }

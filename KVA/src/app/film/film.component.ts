@@ -43,7 +43,7 @@ export class FilmComponent {
     const purchaseHistory = localStorage.getItem('purchaseHistory');
     this.purchaseHistory = purchaseHistory ? JSON.parse(purchaseHistory) : [];
     for (let i = 0; i < this.purchaseHistory.length; i++){
-      if(this.purchaseHistory[i].activeUser == this.user?.email){
+      if(this.purchaseHistory[i].activeUser == this.user?.username){
         this.purchaseHistoryForUser.push(this.purchaseHistory[i]);
       }
     }

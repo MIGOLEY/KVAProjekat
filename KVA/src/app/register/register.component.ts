@@ -37,13 +37,13 @@ export class RegisterComponent {
   }
 
   public doSignup() {
-    if (this.email == '' || this.password == '') {
-      alert('Email and password are required fields')
+    if (this.email == '' || this.password == '' || this.username == '') {
+      alert('Email, korisničko ime i šifra su obavezna polja')
       return
     }
 
     if (this.password !== this.repeatPassword) {
-      alert('Passwords dont match')
+      alert('Šifre se ne podudaraju')
       return
     }
 
@@ -58,6 +58,6 @@ export class RegisterComponent {
       username: this.username
     })
 
-    result ? this.router.navigate(['/login']) : alert('Email is already taken')
+    result ? this.router.navigate(['/login']) : alert('Email ili korisničko ime je već zauzeto')
   }
 }

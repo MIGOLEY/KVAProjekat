@@ -31,6 +31,8 @@ export class UserService {
         for (let u of users) {
             if (u.email === model.email)
                 return false
+            if (u.username === model.username)
+                return false
         }
 
         users.push(model)
@@ -41,13 +43,12 @@ export class UserService {
     static updateUser(model: Korisnik) {
         const users = this.retrieveUsers()
         for (let u of users) {
-            if (u.email === model.email) {
+            if (u.email === model.email && u.username === model.username) {
                 u.name = model.name
                 u.surname = model.surname
                 u.address = model.address
                 u.phoneNumber = model.phoneNumber
                 u.favoriteMovies = model.favoriteMovies
-                u.username = model.username
             }
         }
 
@@ -82,7 +83,7 @@ export class UserService {
 
         const arr = this.retrieveUsers()
         for (let user of arr) {
-            if (user.email == localStorage.getItem('active')) {
+            if (user.username == localStorage.getItem('active')) {
                 user.password = newPassword
                 localStorage.setItem('users', JSON.stringify(arr))
                 return true
