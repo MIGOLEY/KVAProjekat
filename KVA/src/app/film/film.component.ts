@@ -16,10 +16,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { Input } from '@angular/core';
 import { UserService } from 'services/korisnik.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-film',
-  imports: [NgFor,NgIf, RouterLink, MatCardModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, FormsModule],
+  imports: [NgFor,NgIf, RouterLink, MatCardModule, MatListModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, FormsModule, NgClass],
   templateUrl: './film.component.html',
   styleUrl: './film.component.css'
 })
@@ -61,8 +62,6 @@ export class FilmComponent {
             price: this.utils.priceMap.get(movie.movieId) || 0,
             projectionDate: this.utils.projectionDate,
             projectionTime: this.utils.projectionTime,
-            //rating: this.rating;
-            //comment: this.comment;
           };
           this.provera();
           this.filterComm();
@@ -77,7 +76,7 @@ export class FilmComponent {
       if(this.purchaseHistoryForUser[i].movieId === this.movies?.movieId && this.purchaseHistoryForUser[i].status == "Gledano" ){
         if(this.userRatings.length > 0){
           for(let i = 0; i < this.userRatings.length; i++){
-            if(this.userRatings[i].user === this.user?.email && this.userRatings[i].movieId === this.movies?.movieId){
+            if(this.userRatings[i].user === this.user?.username && this.userRatings[i].movieId === this.movies?.movieId){
               this.status = "Komentarisao"
               break;
             }
@@ -98,7 +97,7 @@ export class FilmComponent {
       movieId: movie.movieId,
       rating: rating,
       comment: comment,
-      user: this.user?.email
+      user: this.user?.username
     }
     this.userRatings.push(newRating)
     localStorage.setItem('userRatings', JSON.stringify(this.userRatings))

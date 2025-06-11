@@ -26,6 +26,7 @@ import express, { Request, Response } from 'express';
 })
 export class HomeComponent {
   service = FilmService
+  moviesMaster: Film[] = []
   public movies: Film[] = []
   public error: string | null = null
   public genres: Genre[] | null = null
@@ -41,14 +42,16 @@ export class HomeComponent {
   directorId: number | null = null
   orders: any[] = [];
   public userRatings: any[] = [];
+  moviesCopy: Film[] = [];
 
   constructor(public utils: UtilsService) {
-    FilmService.getMoviesSearch(this.searchValue)
+    FilmService.getMovies()
       .then(rsp => {
         this.movies = rsp.data.map((movie: Film) => ({
           ...movie,
           price: utils.priceMap.get(movie.movieId)
         }));
+        this.moviesMaster = this.movies
       })
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
     FilmService.getGenre()
@@ -69,24 +72,28 @@ export class HomeComponent {
       const ratings = localStorage.getItem('userRatings')
       this.userRatings = ratings ? JSON.parse(ratings) : [];
   }
-  Search() {
-    sessionStorage.setItem('inputName', this.userInputName);
-
-    let name = sessionStorage.getItem('inputName');
+  Search(name: string) {
+    name.toLocaleLowerCase()
 
     if (!name) {
-      name = "";
-    }
-
-    FilmService.getMoviesSearch(name)
-      .then(rsp =>
+      FilmService.getMovies()
+      .then(rsp => {
         this.movies = rsp.data.map((movie: Film) => ({
           ...movie,
           price: this.utils.priceMap.get(movie.movieId)
-        }))
-      )
+        }));
+      })
+      return;
+    }
 
-      .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`)
+    for(let i = 0; i<this.moviesMaster.length; i++){
+      if(this.moviesMaster[i].title.toLocaleLowerCase().includes(name)){
+        this.moviesCopy.push(this.moviesMaster[i])
+      }
+    }
+
+    this.movies = this.moviesCopy
+    this.moviesCopy = []
   }
 
   Filter() {
@@ -135,86 +142,6 @@ export class HomeComponent {
     }
     else{
       return 0
-    }
-  }
-  //mozda
-  Slider(){
-    // Set the price gap
-    const priceGap: number = 500;
-
-    // Get the price input elements
-    const priceInputvalue: NodeListOf<HTMLInputElement> = document.querySelectorAll(".price-input input");
-
-    // Assuming these elements exist:
-    const rangeInputvalue: NodeListOf<HTMLInputElement> = document.querySelectorAll(".range-input input");
-    const rangevalue: HTMLElement = document.querySelector(".slider .progress") as HTMLElement;
-
-    for (let i = 0; i < priceInputvalue.length; i++) {
-        priceInputvalue[i].addEventListener("input", (e: Event) => {
-            const target = e.target as HTMLInputElement;
-
-            let minp = parseInt(priceInputvalue[0].value);
-            let maxp = parseInt(priceInputvalue[1].value);
-            let diff = maxp - minp;
-
-            if (minp < 0) {
-                alert("minimum price cannot be less than 0");
-                priceInputvalue[0].value = "0";
-                minp = 0;
-            }
-
-            if (maxp > 10000) {
-                alert("maximum price cannot be greater than 10000");
-                priceInputvalue[1].value = "10000";
-                maxp = 10000;
-            }
-
-            if (minp > maxp - priceGap) {
-                priceInputvalue[0].value = (maxp - priceGap).toString();
-                minp = maxp - priceGap;
-
-                if (minp < 0) {
-                    priceInputvalue[0].value = "0";
-                    minp = 0;
-                }
-            }
-
-            if (diff >= priceGap && maxp <= parseInt(rangeInputvalue[1].max)) {
-                if (target.classList.contains("min-input")) {
-                    rangeInputvalue[0].value = minp.toString();
-                    let value1 = parseInt(rangeInputvalue[0].max);
-                    rangevalue.style.left = `${(minp / value1) * 100}%`;
-                } else {
-                    rangeInputvalue[1].value = maxp.toString();
-                    let value2 = parseInt(rangeInputvalue[1].max);
-                    rangevalue.style.right = `${100 - (maxp / value2) * 100}%`;
-                }
-            }
-        });
-    }
-
-    // Add event listeners to range input elements
-    for (let i = 0; i < rangeInputvalue.length; i++) {
-      rangeInputvalue[i].addEventListener("input", (e: Event) => {
-        const target = e.target as HTMLInputElement;
-
-        let minVal = parseInt(rangeInputvalue[0].value);
-        let maxVal = parseInt(rangeInputvalue[1].value);
-        let diff = maxVal - minVal;
-
-        if (diff < priceGap) {
-            if (target.classList.contains("min-range")) {
-                rangeInputvalue[0].value = (maxVal - priceGap).toString();
-            } else {
-                rangeInputvalue[1].value = (minVal + priceGap).toString();
-            }
-        } else {
-            priceInputvalue[0].value = minVal.toString();
-            priceInputvalue[1].value = maxVal.toString();
-            rangevalue.style.left = `${(minVal / parseInt(rangeInputvalue[0].max)) * 100}%`;
-            rangevalue.style.right = `${100 - (maxVal / parseInt(rangeInputvalue[1].max)) * 100}%`;
-        }
-      });
     }
   }
 }

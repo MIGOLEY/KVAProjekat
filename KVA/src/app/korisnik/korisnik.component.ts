@@ -40,7 +40,7 @@ export class KorisnikComponent {
   public userCopy: Korisnik | null = null
   public movies: Film[] | null = null
   public favoriteMovies: string[] = []
-  public displayedColumns: string[] = ['title', 'poster', 'runTime', 'startDate', 'projectionDate', 'projectionTime','price', 'total' , 'count', 'status','buttons'/*, 'rating'*/];
+  public displayedColumns: string[] = ['poster', 'title', 'runTime', 'startDate', 'projectionDate', 'projectionTime','price', 'count', 'total', 'status','buttons'/*, 'rating'*/];
   @Input() purchaseHistory: any[] = [];
   @Input() purchaseHistoryForUser: any[] = [];
 
@@ -59,8 +59,6 @@ export class KorisnikComponent {
 
   constructor(private router: Router, public utils: UtilsService) {
     if (!UserService.getActiveUser()) {
-      // Korisnik aplikacije nije ulogovan
-      // Vrati korisnika na homepage
       router.navigate(['/home'])
       return
     }

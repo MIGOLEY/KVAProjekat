@@ -9,31 +9,39 @@
     border-spacing: 0 10px;
 }
 .korpa .cart-holder table .tr-gradient{
-    background: linear-gradient(270deg,rgba(34, 34, 34, 1) 0%, rgba(34, 34, 34, 1) 80%, rgba(154, 0, 0, 1) 100%, rgba(154, 0, 0, 1) 100%);
+    background: linear-gradient(270deg,rgba(34, 34, 34, 1) 0%, rgba(34, 34, 34, 1) 80%, rgb(145, 0, 19, 1) 100%, rgb(145, 0, 19, 1) 100%);
 }
 .korpa .cart-holder table th{ 
     background: transparent !important;
-}
-.korpa .cart-holder table th i {
     color: #f9f9f9;
+    font-size: 17px!important;
+    text-align: center;
 }
 
 .korpa .cart-holder table td {
     color: #f9f9f9;
     background: transparent !important;
-    border: 1px solid #9a0000;
+    border: 1px solid #c20030;
     border-left: none;
     border-right: none;
     padding: 5px;
+    font-size: 17px!important;
+    text-align: center;
 }
+
+.korpa .cart-holder table td img{
+    max-height: 100px;
+    border-radius: 10px;
+}
+
 .korpa .cart-holder table td:first-child {
     border-radius: 10px 0 0 10px;
-    border: 1px solid #9a0000;
+    border: 1px solid #c20030;
     border-right: none;
 }
 .korpa .cart-holder table td:last-child {
     background: #222!important;
-    border: 1px solid #9a0000;
+    border: 1px solid #c20030;
     border-left: none;
     border-radius: 0 10px 10px 0;
 }
@@ -59,14 +67,16 @@
 }
 
 .korpa .cart-holder .remove-btn {
-    background-color: #9a0000;
+    background-color: #c20030;
     color: #f9f9f9;
-    border: 1px solid #9a0000;
+    border: 1px solid #c20030;
     border-radius: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    font-size: 15px;
+    cursor: pointer;
 }
 
 .korpa .summary {
@@ -110,13 +120,30 @@
 
 .korpa .btns-holder .clear-cart {
     margin-top: 10px;
-    background-color: #9a0000;
-    border: 1px solid #9a0000;
+    background-color: #c20030;
+    border: 1px solid #c20030;
     color: #f9f9f9;
 }
 
 .korpa .btns-holder .clear-cart:hover {
     background-color: #141414;
-    color: #9a0000;
-    border: 1px solid #9a0000;
+    color: #c20030;
+    border: 1px solid #c20030;
+}
+
+.korpa .no-order {
+    padding: 15px;
+    border: 2px solid #222;
+    border-radius: 10px;
+    background-color: #222;
+    color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.korpa .no-order mat-card-content p a {
+    color: #f9f9f9;
+}
+
+.korpa .no-order mat-card-content p a:hover {
+    text-decoration: none;
 }

@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Korisnik } from '../../models/korisnik';
 import { MatTableModule } from '@angular/material/table';
-// import { OrderModel } from '../../models/order.model';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -33,7 +32,7 @@ import { UtilsService } from 'services/utils.service';
   styleUrl: './korpa.component.css'
 })
 export class KorpaComponent {
-  public displayedColumns: string[] = ['title', 'poster', 'runTime', 'startDate', 'projectionDate', 'projectionTime', 'price', 'total' , 'count', 'status', 'actions'];
+  public displayedColumns: string[] = ['poster', 'title', 'runTime', 'startDate', 'projectionDate', 'projectionTime', 'price', 'count', 'total', 'status', 'actions'];
   private activeUser = UserService.getActiveUser()?.email;
 
   @Input() orders: any[] = [];
@@ -71,21 +70,23 @@ export class KorpaComponent {
   getTotalPrice(): number {
   let total = 0
   for(let i = 0; i < this.ordersForUser.length; i++){
-    if(this.ordersForUser[i].count > 0){
+    if(this.ordersForUser[i].count > 0 && this.ordersForUser[i].count <= 10){
       total += (Number(this.ordersForUser[i].count) * Number(this.ordersForUser[i].price))
     }
     else if(this.ordersForUser[i].count <= 0){
       total += Number(this.ordersForUser[i].price)
     }
+    else if(this.ordersForUser[i].count > 10){
+      total += (Number(this.ordersForUser[i].price) * 10)
+    }
   }
   return total
-  //return Number(this.ordersForUser.reduce((total, ordersForUser) => total + (ordersForUser.price * ordersForUser.count || 0), 0));
 }
 Reserve() {
     const orders = this.ordersForUser
     const purchaseHistory = JSON.parse(localStorage.getItem('purchaseHistory') || '[]');
     for (let i = 0; i < orders.length; i++) {
-      if(orders[i].activeUser == this.activeUser && orders[i].count > 0){
+      if(orders[i].activeUser == this.activeUser && orders[i].count > 0 && orders[i].count <= 10){
         purchaseHistory.push({
           movieId: orders[i].movieId,
           poster: orders[i].poster,

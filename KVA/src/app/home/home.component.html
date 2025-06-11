@@ -2,18 +2,11 @@
     <div class="container">
         <div class="search-bar">
             <input type="text" [(ngModel)]="userInputName" id="search_form_name" placeholder="Unesite detalje filma"/>
-            <button (click)="Search()">Pretražite</button>
+            <button (click)="Search(userInputName)">Pretražite   <i class="fa-solid fa-magnifying-glass" style="color: rgb(255, 255, 255);"> </i></button>
         </div>
 
         <div class="details-box">
-            <!-- <mat-form-field>
-                <input type="text" matInput [formControl]="genreControl" [matAutocomplete]="auto" placeholder="Select genre">
-                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onGenreSelected($event.option.value)">
-                        <mat-option *ngFor="let genre of filteredGenres" [value]="genre.name">
-                            {{ genre.name }}
-                        </mat-option>
-                    </mat-autocomplete>
-            </mat-form-field> -->
+                <label>Žanr: </label>
                 <select [(ngModel)]="userInputGenre">
                     <option value="" selected>
                         -
@@ -22,6 +15,7 @@
                         {{genre.name}}
                     </option>
                 </select>
+                <label>Glumac: </label>
                 <select [(ngModel)]="userInputActor">
                     <option value="" selected>
                         -
@@ -30,6 +24,7 @@
                         {{actor.name}}
                     </option>
                 </select>
+                <label>Reditelj: </label>
                 <select [(ngModel)]="userInputDirector">
                     <option value="" selected>
                         -
@@ -39,55 +34,20 @@
                     </option>
                 </select>
             <br>
-            <!--
-            Ovi input-i ispod se trenutno koriste samo da se proveri da li uopšte uspešno pretražuje navedene kriterijume pretrage; 
-            kasnije ćemo promeniti da
-            -->
-
-            <!-- <div class="header">
-                <h2 class="projtitle">Price Range Slider</h2>
-            </div>
-            <div class="price-input-container">
-                <div class="price-input">
-                    <div class="price-field">
-                        <span>Minimum Price</span>
-                        <input type="number" class="min-input" value="2500">
-                    </div>
-                    <div class="price-field">
-                        <span>Maximum Price</span>
-                        <input type="number" class="max-input" value="8500">
-                    </div>
-                </div>
-                <div class="slider">
-                    <div class="price-slider"></div>
-                </div>
-            </div>
-
-            <div class="range-input">
-                <input type="range" class="min-range" min="0" max="10000" value="2500" step="1">
-                <input type="range" class="max-range" min="0" max="10000" value="8500" step="1">
-            </div>
-
-            
-            <label for="search_form_date_released">Unesite godinu izlaska filma: </label> <input type="year" id="search_form_date_released"><br>
-            <label for="search_form_date_projection">Unesite datum projekcije filma: </label> <input type="number" id="search_form_date_projection"><br>
-            <label for="search_form_runtime">Unesite dužinu projekcije: </label> <input type="range" id="search_form_runtime"><br> -->
-            <!-- <label for="search_form_price">Unesite cenu karte: </label> <input type="number" id="search_form_price"> -->
-            <!-- <label for="search_form_rating">Unesite željenu ocenu filma: </label> <input type="number" id="search_form_rating" min="1" max="5"> -->
             <button (click)="Filter()" class="confirm-params-btn">Potvrdite parametre</button>
         </div>
 
         <div *ngIf="movies" class="container movies-container">
             <mat-card class="movies-card" appearance="outlined" *ngFor="let movie of movies">
                 <div class="movie-box">
-                    <a [routerLink]="['/film/',movie.movieId]"><img mat-card-image [src]="utils.generateMovieImage(movie.poster)" [alt]="movie.poster" style="height:200px"></a>
+                    <a [routerLink]="['/film/',movie.movieId]"><img mat-card-image [src]="utils.generateMovieImage(movie.poster)" [alt]="movie.poster"></a>
                     <mat-card-content>
-                        <h1>{{movie.title}}</h1>
+                        <h2>{{movie.title}}</h2>
                         <p>Trajanje filma: {{utils.round(movie.runTime/60)}}h {{utils.leftover(movie.runTime)}}min</p>
                         <p>Datum izlaska: {{utils.formatDate(movie.startDate)}}</p>
-                        <p *ngIf="ProsecnaOcena(movie.movieId) != 0">Ocena gledalaca: {{utils.round2(ProsecnaOcena(movie.movieId))}}</p>
+                        <p *ngIf="ProsecnaOcena(movie.movieId) != 0">Ocena gledalaca: <i class="fa-solid fa-star" style="color: rgb(252, 255, 95);"> </i>{{utils.round2(ProsecnaOcena(movie.movieId))}}</p>
                         <p *ngIf="ProsecnaOcena(movie.movieId) == 0">Ocena gledalaca: Nema ocena</p>
-                        <p>Cena karte: {{movie.price}} RSD</p>
+                        <p><strong>Cena karte: {{movie.price}} RSD</strong></p>
                     </mat-card-content>
                 </div>
                 <mat-card-actions>

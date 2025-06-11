@@ -22,6 +22,10 @@
     outline: none;
 }
 
+.home .search-bar input::placeholder {
+    color: #f9f9f9;
+}
+
 .home .search-bar button {
     border-radius: 100px;
     outline: none;
@@ -93,7 +97,10 @@
 }
 
 .home .movies-container{
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px 40px;
 }
 
 .home .movies-container mat-card {
@@ -107,15 +114,44 @@
 }
 
 .home .movies-container mat-card .movie-box {
-    display: flex;
+    display: block;
+    width: 250px;
+    text-align: center;  
+}
+
+.home .movies-container mat-card .movie-box p:last-child{
+    margin-top: 20px;
+}
+
+.home .movies-container mat-card .movie-box h2{
+    margin-bottom: 20px;    
+}
+
+.home .movies-container mat-card .movie-box img{
+    height:250px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+.home .movies-container mat-card .movie-box img:hover{
+    -ms-transform: scale(1.5);
+    transform: scale(1.05); 
+}
+
+.home .movies-container mat-card mat-card-actions {
+    position: relative;
+    height: 100%;
 }
 
 .home .movies-container mat-card mat-card-actions .more-details {
     border: 1px solid #09c952;
     color: #09c952;
     border-radius: 100px;
-    margin-right: 10px;
     transition: 0.2s;
+    width: 100%;
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 
 .home .movies-container mat-card mat-card-actions .more-details:hover {
@@ -134,4 +170,13 @@
 .home .movies-container mat-card mat-card-actions .book:hover {
     background-color: #c9c909;
     color: #222222;
+}
+
+@media (max-width: 800px) {
+  .home .movies-container {
+    flex-direction: column;
+  }
+  .home .movies-container .movie-box{
+    align-self: center;
+  }
 }

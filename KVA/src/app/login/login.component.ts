@@ -15,7 +15,7 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class LoginComponent {
 
-  public email: string = ''
+  public username: string = ''
   public password: string = ''
 
   constructor(private router: Router) {
@@ -26,7 +26,7 @@ export class LoginComponent {
   }
 
   public doLogin() {
-    if (UserService.login(this.email, this.password)) {
+    if (UserService.login(this.username, this.password)) {
       this.router.navigate(['/korisnik'])
       return
     }

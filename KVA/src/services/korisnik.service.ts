@@ -14,8 +14,6 @@ export class UserService {
                     surname: 'User',
                     phoneNumber: '+3816123456789',
                     address: 'Mokroluska 14, Vozdovac',
-                    tickets: [],
-                    watchedMovies: [],
                     favoriteMovies: [],
                     password: 'user123'
                 }
@@ -56,10 +54,10 @@ export class UserService {
         localStorage.setItem('users', JSON.stringify(users))
     }
 
-    static login(email: string, password: string): boolean {
+    static login(username: string, password: string): boolean {
         for (let user of this.retrieveUsers()) {
-            if (user.email === email && user.password === password) {
-                localStorage.setItem('active', user.email)
+            if (user.username === username && user.password === password) {
+                localStorage.setItem('active', user.username)
                 return true
             }
         }

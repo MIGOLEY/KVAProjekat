@@ -7,8 +7,6 @@ export interface Korisnik {
     email: string;
     phoneNumber: string;
     address: string;
-    tickets: Ticket[];
-    watchedMovies: Film[];
     favoriteMovies: string[];
     username: string;
     password: string;

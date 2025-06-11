@@ -55,8 +55,6 @@ export class RegisterComponent {
       phoneNumber: this.phone,
       address: this.address,
       favoriteMovies: this.favoriteMovies,
-      watchedMovies: [],
-      tickets: [],
       username: this.username
     })
 

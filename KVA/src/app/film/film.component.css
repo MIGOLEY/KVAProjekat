@@ -10,13 +10,18 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.film .movies-card .movie-details {
+.film .movies-card .movie-details{
     padding-left: 20px;
     padding-top: 5px;
 }
 
 .film .movies-card .movie-details ul {
     list-style: none;
+}
+
+.film .movies-card .movie-details mat-card-content {
+    display: flex;
+    gap: 50px;
 }
 
 .film .movies-card .movie-details mat-card-content h1 {
@@ -95,6 +100,7 @@
     color: #222;
     border-radius: 100px;
     border: 1px solid #d1ab00;
+    margin-top: 10px;
     transition: 0.2s;
 }
 
@@ -190,4 +196,16 @@
     border-radius: 10px;
     margin-bottom: 10px;
     height: fit-content;
+}
+
+.film .movies-card .movie-details .movie-details-container{
+    width: 50%;
+}
+
+.film .movies-card .more-details .reserve-container{
+    padding:20px;
+}
+
+.film .movies-card .cards-amount {
+    width: 50px;
 }
