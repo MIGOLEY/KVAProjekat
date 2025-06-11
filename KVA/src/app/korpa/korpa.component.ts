@@ -33,7 +33,7 @@ import { UtilsService } from 'services/utils.service';
 })
 export class KorpaComponent {
   public displayedColumns: string[] = ['poster', 'title', 'runTime', 'startDate', 'projectionDate', 'projectionTime', 'price', 'count', 'total', 'status', 'actions'];
-  private activeUser = UserService.getActiveUser()?.email;
+  private activeUser = UserService.getActiveUser()?.username;
 
   @Input() orders: any[] = [];
   ordersForUser: any[] = [];
