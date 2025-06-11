@@ -168,7 +168,10 @@ export class UtilsService {
     const activeUser = UserService.getActiveUser()?.username;
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     const ordered = orders.find((o: any) => (o.movieId === movie.movieId) && (o.projectionTime === userInputTime) && (o.projectionDate === userInputDate) );
-    if (ordered && ordered.count < 10 && activeUser) {
+    if(!activeUser){
+      alert("Ulogujte se");
+    }
+    else if (ordered && ordered.count < 10 && activeUser) {
       ordered.count += 1;
       alert("Rezervisali ste još jednu kartu za ovaj film");
     } else if(userInputDate != '' && userInputTime != '' && userInputCount > 0 && userInputCount <= 10 && activeUser) {
