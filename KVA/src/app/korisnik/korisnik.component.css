@@ -127,6 +127,7 @@
     font-size: 15px;
     height: 20px;
     margin-top: 10px;
+    display: block;
 }
 .korisnik .cart-holder .details-btn {
     background-color: #222;
@@ -139,6 +140,8 @@
     padding-right: 10px;
     font-size: 15px;
     height: 20px;
+    display: block;
+    cursor: pointer;
 }
 .korisnik .cart-holder .pay-btn {
     background-color: #25A374;

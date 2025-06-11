@@ -162,9 +162,9 @@
                         Opcije
                     </th>
                     <td mat-cell *matCellDef="let element" class="id">
-                        <a mat-button [routerLink]="['/film/', element.movieId]"  class="details-btn">
+                        <button type="button" mat-button [routerLink]="['/film/', element.movieId]"  class="details-btn">
                             Detalji
-                        </a>
+                        </button>
                         <div *ngIf="element.status == 'Rezervisano'" class="payment-btns">
                             <button type="button" mat-button (click)="Pay(element)" class="pay-btn">
                                 Plati
