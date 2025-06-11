@@ -171,9 +171,14 @@ export class UtilsService {
     if(!activeUser){
       alert("Ulogujte se");
     }
-    else if (ordered && ordered.count < 10 && activeUser) {
-      ordered.count += 1;
-      alert("Rezervisali ste još jednu kartu za ovaj film");
+    else if (ordered && ordered.count <= 10 && activeUser && userInputCount > 0) {
+      if((userInputCount + ordered.count) <= 10){
+        ordered.count += userInputCount;
+        alert("Dodali ste u korpu još karata za ovu projekciju");
+      }
+      else{
+        alert("Previše karata! Maksimum je 10 po projekciji")
+      }
     } else if(userInputDate != '' && userInputTime != '' && userInputCount > 0 && userInputCount <= 10 && activeUser) {
       alert("Dodali ste film u vašu korpu");
       orders.push({

@@ -120,7 +120,7 @@ Reserve() {
   }
   getStatus(order: any):string{
     for(let i = 0; i < this.purchaseHistoryForUser.length; i++){
-      if(order.movieId === this.purchaseHistoryForUser[i].movieId){
+      if(order.movieId === this.purchaseHistoryForUser[i].movieId && this.purchaseHistoryForUser[i].status === "Gledano"){
         return "Gledano"
       }
     }
